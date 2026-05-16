@@ -91,7 +91,7 @@
             justify-content: center;
         }
 
-        .image-container img { 
+        .image-container img:not(.no-kb) { 
             position: absolute;
             width: 100%; 
             height: 100%; 
@@ -704,8 +704,8 @@
                             </div>
                         </div>
                     </div>
-                    <div class="image-container" style="height: 320px; display: flex; justify-content: center; align-items: center; position: relative;">
-                        <img src="images/qr_whatsapp_contact.png" alt="QR WhatsApp de Contacto" style="max-height: 100%; object-fit: contain; border-radius: 16px; box-shadow: 0 15px 35px rgba(0,0,0,0.5);">
+                    <div class="image-container" style="height: 320px; display: flex; justify-content: center; align-items: center; position: relative; background: rgba(0,0,0,0.15);">
+                        <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp de Contacto" style="width: 180px; height: 180px; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); position: relative; transform: none; top: auto; left: auto; object-fit: contain;">
                     </div>
                 </div>
             </div>
@@ -857,6 +857,7 @@
             const y = Math.cos(elapsed * 0.2) * 4;
 
             images.forEach(img => {
+                if (img.classList.contains('no-kb')) return;
                 const slide = img.closest('.slide');
                 if (slide && slide.classList.contains('active')) {
                     // Mantenemos el scale fijo para evitar tirones de redibujado
