@@ -228,6 +228,15 @@
             }
         }
 
+        /* Text Highlight with brand gradient color */
+        .highlight-text {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            font-weight: 700;
+        }
+
         /* Custom Styles for Specific Slides */
         .badge { background: var(--secondary); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 1rem; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
         
@@ -348,7 +357,7 @@
                         <ul class="feature-list">
                             <li><i class="fas fa-times-circle"></i> Menús estáticos que nadie mira.</li>
                             <li><i class="fas fa-times-circle"></i> Canales de TV que distraen en lugar de invitar a comprar.</li>
-                            <li><i class="fas fa-times-circle"></i> **Publicidad de otras marcas** que no te pagan por estar ahí.</li>
+                            <li><i class="fas fa-times-circle"></i> <strong class="highlight-text">Publicidad de otras marcas</strong> que no te pagan por estar ahí.</li>
                         </ul>
                     </div>
                     <div class="image-container">
@@ -462,21 +471,21 @@
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-qrcode" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conexión Directa</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conexión Directa</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Tus clientes escanean la pantalla para abrir menús, promociones o redes sociales.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-cogs" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Múltiples Utilidades</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Múltiples Utilidades</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Úsalo para encuestas de satisfacción, WiFi gratis, opiniones de Google y más.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-sync-alt" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Actualización Remota</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Actualización Remota</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Cambia el destino o la promoción del código QR al instante y sin editar tu video.</span>
                                 </div>
                             </div>
@@ -498,9 +507,9 @@
                         <h2>Tu pantalla puede pagarse sola</h2>
                         <p>Convierte tu televisor en un activo que genera ingresos directos.</p>
                         <ul class="feature-list">
-                            <li><i class="fas fa-handshake"></i> **Vende espacios** a negocios complementarios (licorerías, postres, tiendas locales).</li>
-                            <li><i class="fas fa-dollar-sign"></i> Crea una nueva fuente de **facturación mensual**.</li>
-                            <li><i class="fas fa-user-shield"></i> **Control Total:** Tú decides qué marcas se anuncian en tu casa.</li>
+                            <li><i class="fas fa-handshake"></i> <strong class="highlight-text">Vende espacios</strong> a negocios complementarios (licorerías, postres, tiendas locales).</li>
+                            <li><i class="fas fa-dollar-sign"></i> Crea una nueva fuente de <strong class="highlight-text">facturación mensual</strong>.</li>
+                            <li><i class="fas fa-user-shield"></i> <strong class="highlight-text">Control Total:</strong> Tú decides qué marcas se anuncian en tu casa.</li>
                         </ul>
                     </div>
                     <div class="image-container">
@@ -595,21 +604,21 @@
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-microchip" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Equipamiento Simple</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Equipamiento Simple</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Smart TVs compatibles o mini-computadoras integradas a tus pantallas.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-sliders-h" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Escalabilidad Total</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Escalabilidad Total</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Presupuesto adaptado al número de pantallas y complejidad del local.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-hand-holding-usd" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Máximo Ahorro</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Máximo Ahorro</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Reemplaza los costos de impresión física por una solución digital rentable.</span>
                                 </div>
                             </div>
@@ -635,21 +644,21 @@
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-paint-brush" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Diseño Mensual Incluido</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Diseño Mensual Incluido</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Actualizaciones periódicas de tus menús, promociones y contenido de temporada según tu plan.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-plus-circle" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Creaciones Adicionales</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Creaciones Adicionales</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Si requieres material publicitario extra o campañas especiales fuera de tu plan, las creamos a un costo razonable.</span>
                                 </div>
                             </div>
                             <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
                                 <i class="fas fa-headset" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Asistencia y Operatividad</strong>
+                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Asistencia y Operatividad</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">Monitoreo constante y soporte técnico especializado para garantizar que tus pantallas operen sin fallas.</span>
                                 </div>
                             </div>
