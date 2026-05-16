@@ -156,6 +156,21 @@
 
         .logo-top { position: fixed; top: 2rem; left: 2rem; height: 40px; z-index: 100; }
 
+        /* Typewriter Cursor */
+        .typewriter-cursor {
+            display: inline-block;
+            width: 2px;
+            height: 1.2em;
+            background-color: var(--primary);
+            margin-left: 4px;
+            vertical-align: middle;
+            animation: blink 0.7s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 0; }
+            50% { opacity: 1; }
+        }
+
         /* Custom Styles for Specific Slides */
         .badge { background: var(--secondary); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 1rem; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
         
@@ -236,7 +251,10 @@
                 <div class="badge reveal-item">VMktTV</div>
                 <div class="reveal-item" style="font-size: 1.2rem; font-weight: 600; color: #818cf8; letter-spacing: 2px; margin-bottom: 1rem; text-transform: uppercase;">Virtual Marketing TV</div>
                 <h1>Transforma tus pantallas en tu mejor vendedor</h1>
-                <p>Tu canal de televisión por internet exclusivo para tu negocio. Sin esfuerzo, sin complicaciones, solo resultados.</p>
+                <p id="typewriter-container" style="min-height: 3.8em; line-height: 1.8; font-size: 1.3rem; margin: 1.5rem 0; color: #cbd5e1; text-align: center;">
+                    <span id="typewriter-line1" style="display: inline-block; min-height: 1.8em; width: 100%;"></span><br>
+                    <span id="typewriter-line2" style="display: inline-block; min-height: 1.8em;"></span>
+                </p>
                 <div class="reveal-item" style="margin-top: 2rem; font-weight: 600; font-size: 1.2rem; color: var(--primary);">
                     <i class="fas fa-chevron-down"></i> Usa las flechas para navegar
                 </div>
@@ -565,12 +583,68 @@
             document.getElementById('nextBtn').style.opacity = currentSlide === totalSlides ? '0' : '1';
             document.getElementById('nextBtn').style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
 
+            // Activar máquina de escribir si es la diapositiva 1
+            if (currentSlide === 1) {
+                startTypewriter();
+            } else {
+                stopTypewriter();
+            }
+
             // Activar simulación de menú si es la diapositiva 5
             if (currentSlide === 5) {
                 startMenuSimulation();
             } else {
                 stopMenuSimulation();
             }
+        }
+
+        let typewriterTimeout1;
+        let typewriterTimeout2;
+
+        function startTypewriter() {
+            // Limpiar timeouts anteriores
+            if (typewriterTimeout1) clearTimeout(typewriterTimeout1);
+            if (typewriterTimeout2) clearTimeout(typewriterTimeout2);
+
+            const line1Element = document.getElementById('typewriter-line1');
+            const line2Element = document.getElementById('typewriter-line2');
+            if (!line1Element || !line2Element) return;
+
+            line1Element.innerHTML = '';
+            line2Element.innerHTML = '';
+
+            const line1Text = "Tu canal de televisión por internet exclusivo para tu negocio.";
+            const line2Text = "Sin esfuerzo, sin complicaciones, solo resultados.";
+
+            let charIndex1 = 0;
+            let charIndex2 = 0;
+            const typingSpeed = 30; // ms por carácter
+
+            function typeLine1() {
+                if (charIndex1 <= line1Text.length) {
+                    line1Element.innerHTML = line1Text.substring(0, charIndex1) + (charIndex1 < line1Text.length ? '<span class="typewriter-cursor">|</span>' : '');
+                    charIndex1++;
+                    typewriterTimeout1 = setTimeout(typeLine1, typingSpeed);
+                } else {
+                    line1Element.innerHTML = line1Text;
+                    typewriterTimeout2 = setTimeout(typeLine2, 400);
+                }
+            }
+
+            function typeLine2() {
+                if (charIndex2 <= line2Text.length) {
+                    line2Element.innerHTML = line2Text.substring(0, charIndex2) + '<span class="typewriter-cursor">|</span>';
+                    charIndex2++;
+                    typewriterTimeout2 = setTimeout(typeLine2, typingSpeed);
+                }
+            }
+
+            typeLine1();
+        }
+
+        function stopTypewriter() {
+            if (typewriterTimeout1) clearTimeout(typewriterTimeout1);
+            if (typewriterTimeout2) clearTimeout(typewriterTimeout2);
         }
 
         document.getElementById('nextBtn').addEventListener('click', () => {
