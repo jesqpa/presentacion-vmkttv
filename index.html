@@ -524,17 +524,16 @@
 
         // Lógica de simulación de Menú Inteligente (Slide 5)
         let menuInterval;
+        let menuTimeout;
         function startMenuSimulation() {
             const tabs = ['tab-breakfast', 'tab-lunch', 'tab-dinner'];
             const imgs = ['img-breakfast', 'img-lunch', 'img-dinner'];
             let currentIdx = 0;
 
             if (menuInterval) clearInterval(menuInterval);
+            if (menuTimeout) clearTimeout(menuTimeout);
 
             function updateMenu() {
-                const breakfastTab = document.getElementById(tabs[0]);
-                if (!breakfastTab) return; // Por si acaso
-
                 tabs.forEach((tab, i) => {
                     const tabEl = document.getElementById(tab);
                     const imgEl = document.getElementById(imgs[i]);
@@ -544,12 +543,29 @@
                 currentIdx = (currentIdx + 1) % tabs.length;
             }
 
-            updateMenu();
-            menuInterval = setInterval(updateMenu, 3500);
+            // Esperar a que terminen las animaciones de revelado inicial (3 segundos)
+            menuTimeout = setTimeout(() => {
+                updateMenu();
+                menuInterval = setInterval(updateMenu, 3500);
+            }, 3000);
         }
 
         function stopMenuSimulation() {
             if (menuInterval) clearInterval(menuInterval);
+            if (menuTimeout) clearTimeout(menuTimeout);
+            
+            // Limpiar estados activos
+            ['tab-breakfast', 'tab-lunch', 'tab-dinner'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active-tab');
+            });
+            ['img-breakfast', 'img-lunch', 'img-dinner'].forEach(id => {
+                const el = document.getElementById(id);
+                if (el) el.classList.remove('active-img');
+            });
+            // Re-activar la primera imagen por defecto
+            const firstImg = document.getElementById('img-breakfast');
+            if (firstImg) firstImg.classList.add('active-img');
         }
 
         // Inicializar la primera diapositiva con un pequeño delay para activar animaciones
