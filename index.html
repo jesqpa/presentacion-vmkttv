@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Presentación VMktTV 2.0 - Restaurantes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --secondary: #ec4899;
+            --dark: #0f172a;
+            --light: #f8fafc;
+            --glass: rgba(255, 255, 255, 0.1);
+            --glass-border: rgba(255, 255, 255, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            overflow: hidden;
+        }
+
+        .presentation-container {
+            width: 100vw;
+            height: 100vh;
+            position: relative;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 5%;
+            opacity: 0;
+            transition: opacity 0.8s ease, transform 0.8s ease;
+            transform: translateY(20px);
+            pointer-events: none;
+            background: radial-gradient(circle at top right, #1e293b, #0f172a);
+        }
+
+        .slide.active {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .glass-container {
+            background: var(--glass);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 24px;
+            padding: 3rem;
+            max-width: 1000px;
+            width: 90%;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 { font-size: 4rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.1; background: linear-gradient(to right, #818cf8, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        h2 { font-size: 3rem; font-weight: 600; margin-bottom: 1.5rem; color: #fff; }
+        p { font-size: 1.5rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 2rem; }
+
+        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+
+        .image-container {
+            position: relative;
+            width: 100%;
+            height: 400px; /* Fixed height for the canvas */
+            overflow: hidden;
+            border-radius: 24px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            border: 1px solid var(--glass-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .image-container img { 
+            position: absolute;
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover;
+            top: 0;
+            left: 0;
+            /* No CSS animation here, handled by JS for maximum smoothness */
+            transform: scale(1.3) translate3d(0, 0, 0);
+            will-change: transform;
+            transform-style: preserve-3d;
+            backface-visibility: hidden;
+            -webkit-backface-visibility: hidden;
+        }
+
+        /* Animaciones de Entrada para Contenido */
+        .slide h1, .slide h2, .slide p, .slide .feature-list li, .slide .badge, .slide .image-container, .slide .glass-card, .reveal-item {
+            opacity: 0;
+            transform: translateY(20px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            filter: blur(5px);
+        }
+
+        .slide.active h1, .slide.active h2, .slide.active p, .slide.active .feature-list li, .slide.active .badge, .slide.active .image-container, .slide.active .glass-card, .slide.active .reveal-item {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            filter: blur(0);
+        }
+
+        /* Delays Escalonados Estilo Lectura */
+        .slide.active .badge { transition-delay: 0.2s; }
+        .slide.active h1, .slide.active h2 { transition-delay: 0.5s; }
+        .slide.active p { transition-delay: 0.9s; }
+        .slide.active .image-container { transition-delay: 1.2s; }
+        
+        /* Lista de beneficios y items de revelado */
+        .slide.active .feature-list li:nth-child(1), .slide.active .reveal-item:nth-child(1) { transition-delay: 1.5s; }
+        .slide.active .feature-list li:nth-child(2), .slide.active .reveal-item:nth-child(2) { transition-delay: 2.2s; }
+        .slide.active .feature-list li:nth-child(3), .slide.active .reveal-item:nth-child(3) { transition-delay: 2.9s; }
+        .slide.active .feature-list li:nth-child(4), .slide.active .reveal-item:nth-child(4) { transition-delay: 3.6s; }
+        .slide.active .feature-list li:nth-child(5), .slide.active .reveal-item:nth-child(5) { transition-delay: 4.3s; }
+
+        /* Cards con ritmo de lectura */
+        .slide.active .glass-card:nth-child(1) { transition-delay: 1.5s; }
+        .slide.active .glass-card:nth-child(2) { transition-delay: 2.2s; }
+        .slide.active .glass-card:nth-child(3) { transition-delay: 2.9s; }
+
+        .feature-list { list-style: none; }
+        .feature-list li { font-size: 1.4rem; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 1rem; }
+        .feature-list i { color: var(--secondary); font-size: 1.8rem; }
+
+        .controls { position: fixed; bottom: 2rem; right: 2rem; display: flex; gap: 1rem; z-index: 100; }
+        .btn-nav { background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 50%; cursor: pointer; transition: 0.3s; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        .btn-nav:hover { background: var(--primary); transform: scale(1.1); }
+
+        .progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease; z-index: 200; }
+
+        .logo-top { position: fixed; top: 2rem; left: 2rem; height: 40px; z-index: 100; }
+
+        /* Custom Styles for Specific Slides */
+        .badge { background: var(--secondary); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 1rem; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
+        
+        .mockup-label { position: absolute; bottom: -10px; right: -10px; background: var(--primary); padding: 1rem; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+
+        @media (max-width: 768px) {
+            h1 { font-size: 2.2rem; }
+            h2 { font-size: 1.8rem; }
+            p { font-size: 1.1rem; }
+            
+            .glass-container {
+                padding: 1.5rem;
+                width: 95%;
+                max-height: 90vh;
+                overflow-y: auto;
+            }
+
+            .grid {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+            }
+
+            .image-container {
+                height: 200px;
+                order: -1; /* Mover imagen arriba en móvil */
+            }
+
+            .feature-list li {
+                font-size: 1rem;
+                margin-bottom: 1rem;
+            }
+
+            .btn-nav {
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+            }
+
+            .slide.active .glass-card {
+                padding: 1rem;
+            }
+
+            .slide.active .glass-card i {
+                font-size: 2rem;
+            }
+            
+            /* Ajuste para Managed Service Grid en móvil */
+            #slide7 .grid {
+                display: flex !important;
+                flex-direction: column !important;
+                gap: 1rem !important;
+            }
+
+            /* Ajuste para ROI en móvil */
+            #slide9 .glass-container > div:last-child {
+                flex-direction: column !important;
+                gap: 2rem !important;
+                display: flex !important;
+            }
+            
+            #slide9 div[style*="border-left"] {
+                border-left: none !important;
+                border-top: 1px solid var(--glass-border) !important;
+                width: 50% !important;
+                margin: 0 auto !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progress-bar" id="progressBar" style="width: 11%;"></div>
+
+    <div class="presentation-container">
+        <!-- Slide 1: Portada -->
+        <div class="slide" id="slide1">
+            <div class="glass-container" style="text-align: center;">
+                <div class="badge reveal-item">VMktTV</div>
+                <div class="reveal-item" style="font-size: 1.2rem; font-weight: 600; color: #818cf8; letter-spacing: 2px; margin-bottom: 1rem; text-transform: uppercase;">Virtual Marketing TV</div>
+                <h1>Transforma tus pantallas en tu mejor vendedor</h1>
+                <p>Tu canal de televisión exclusivo para restaurantes. Sin esfuerzo, sin complicaciones, solo resultados.</p>
+                <div class="reveal-item" style="margin-top: 2rem; font-weight: 600; font-size: 1.2rem; color: var(--primary);">
+                    <i class="fas fa-chevron-down"></i> Usa las flechas para navegar
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: El Reto -->
+        <!-- Slide 2: El Desperdicio de Atención -->
+        <div class="slide" id="slide2">
+            <div class="glass-container">
+                <div class="grid">
+                    <div>
+                        <div class="badge" style="background: var(--accent, #f43f5e);">El Gran Desperdicio</div>
+                        <h2 style="color: #f43f5e;">Tu pantalla está encendida... pero ¿está vendiendo?</h2>
+                        <p style="font-size: 1.2rem;">Hoy en día, la mayoría de los negocios desperdician su activo más visible.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-times-circle"></i> Menús estáticos que nadie mira.</li>
+                            <li><i class="fas fa-times-circle"></i> Canales de TV que distraen en lugar de invitar a comprar.</li>
+                            <li><i class="fas fa-times-circle"></i> **Publicidad de otras marcas** que no te pagan por estar ahí.</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/feature_security.png" alt="Desperdicio de atención">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: El Problema Operativo -->
+        <div class="slide" id="slide3">
+            <div class="glass-container">
+                <div class="grid">
+                    <div class="image-container">
+                        <img src="images/feature_realtime.png" alt="Problemas operativos">
+                    </div>
+                    <div>
+                        <div class="badge" style="background: #fbbf24; color: #000;">Basta de complicaciones</div>
+                        <h2 style="color: #fbbf24;">Soluciones obsoletas que te quitan tiempo</h2>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-times-circle"></i> Memorias USB lentas y propensas a fallos.</li>
+                            <li><i class="fas fa-times-circle"></i> Tu personal perdiendo tiempo en ajustes técnicos.</li>
+                            <li><i class="fas fa-times-circle"></i> Pantallas negras o errores en horas pico.</li>
+                            <li><i class="fas fa-times-circle"></i> Una inversión cara que hoy no genera retorno.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 4: La Solución -->
+        <div class="slide" id="slide4">
+            <div class="glass-container">
+                <div class="grid">
+                    <div class="image-container">
+                        <!-- We will use the generated mockup here -->
+                        <img src="images/mockup_restaurante.png" alt="Restaurante Mockup">
+                    </div>
+                    <div>
+                        <div class="badge">La Solución</div>
+                        <h2>Tu Propio Canal de Televisión</h2>
+                        <p>Imagina una pantalla que sepa qué mostrar según la hora del día, mientras entretiene a tus clientes.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-check-circle"></i> Diseño profesional incluido.</li>
+                            <li><i class="fas fa-check-circle"></i> Operación remota total.</li>
+                            <li><i class="fas fa-check-circle"></i> Cero interacción del personal.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 5: Smart Menu -->
+        <div class="slide" id="slide5">
+            <div class="glass-container">
+                <div class="grid">
+                    <div>
+                        <h2>Menús que trabajan por ti</h2>
+                        <p>El sistema cambia automáticamente lo que muestra según el horario:</p>
+                        <div style="display: flex; flex-direction: column; gap: 1rem;">
+                            <div class="reveal-item" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #fcd34d;">
+                                <strong>08:00 AM:</strong> Desayunos y Cafés
+                            </div>
+                            <div class="reveal-item" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #f87171;">
+                                <strong>01:00 PM:</strong> Especiales del Almuerzo
+                            </div>
+                            <div class="reveal-item" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #818cf8;">
+                                <strong>07:00 PM:</strong> Cenas y Coctelería
+                            </div>
+                        </div>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/feature_scheduling.png" alt="Smart Menu">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: Entretenimiento -->
+        <div class="slide" id="slide6">
+            <div class="glass-container">
+                <div class="grid">
+                    <div class="image-container">
+                        <img src="images/feature_channels.png" alt="TV + Ads">
+                    </div>
+                    <div>
+                        <h2>Entretenimiento + Venta</h2>
+                        <p>No elijas entre el partido y tus anuncios. ¡Pon ambos!</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-tv"></i> Fútbol o noticias en vivo.</li>
+                            <li><i class="fas fa-ad"></i> Banners laterales con promociones.</li>
+                            <li><i class="fas fa-comment-dots"></i> Marquesinas con ofertas flash.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 7: Managed Service -->
+        <div class="slide" id="slide7">
+            <div class="glass-container" style="text-align: center;">
+                <h2>Tú enciendes, nosotros operamos</h2>
+                <p>Nuestra misión es que tú te olvides de la tecnología.</p>
+                <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 700px; margin: 3rem auto 0;">
+                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-paint-brush" style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--secondary);"></i>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.8rem;">Diseño Profesional</h3>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Creamos videos y artes publicitarias a medida para tu marca.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--primary);"></i>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.8rem;">Gestión Remota</h3>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Actualizamos tus promociones y menús sin que tengas que tocar nada.</p>
+                        </div>
+                    </div>
+                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-power-off" style="font-size: 2.5rem; width: 60px; text-align: center; color: #4ade80;"></i>
+                        <div>
+                            <h3 style="margin: 0; font-size: 1.8rem;">Simplicidad Total</h3>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Tu única tarea es encender el televisor al abrir tu local.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Resilience -->
+        <div class="slide" id="slide8">
+            <div class="glass-container">
+                <div class="grid">
+                    <div>
+                        <h2>Nunca se detiene</h2>
+                        <p>Incluso si tu Wi-Fi falla, tu publicidad sigue trabajando.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-shield-alt"></i> Caché inteligente de contenido.</li>
+                            <li><i class="fas fa-wifi"></i> Sincronización automática al volver.</li>
+                            <li><i class="fas fa-check"></i> Cero pantallas en negro.</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/feature_realtime.png" alt="Resilience">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: ROI -->
+        <div class="slide" id="slide9">
+            <div class="glass-container" style="text-align: center;">
+                <h2>Un vendedor que no descansa</h2>
+                <p>Nuestra analítica demuestra el impacto en tu negocio.</p>
+                <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 2rem;">
+                    <div class="reveal-item">
+                        <div style="font-size: 4rem; font-weight: 700; color: var(--primary);">+30%</div>
+                        <p>En ventas de impulsos</p>
+                    </div>
+                    <div style="border-left: 1px solid var(--glass-border);"></div>
+                    <div class="reveal-item">
+                        <div style="font-size: 4rem; font-weight: 700; color: var(--secondary);">-50%</div>
+                        <p>Percepción de espera</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: Contacto -->
+        <div class="slide" id="slide10">
+            <div class="glass-container" style="text-align: center;">
+                <h1>¿Listo para modernizar tu local?</h1>
+                <p>Hablemos sobre cómo podemos aumentar tus ventas hoy mismo.</p>
+                <div style="margin-top: 3rem; font-size: 2rem; font-weight: 600;">
+                    <div class="reveal-item" style="margin-bottom: 1rem;"><i class="fas fa-phone"></i> [Tu Teléfono]</div>
+                    <div class="reveal-item" style="margin-bottom: 1rem;"><i class="fas fa-envelope"></i> [Tu Email]</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="controls">
+        <button class="btn-nav" id="prevBtn"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn-nav" id="nextBtn"><i class="fas fa-arrow-right"></i></button>
+    </div>
+
+    <script>
+        let currentSlide = 1;
+        const totalSlides = 10;
+
+        function updateSlide() {
+            document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
+            document.getElementById('slide' + currentSlide).classList.add('active');
+            
+            const progress = (currentSlide / totalSlides) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+
+            // Ocultar botones en los extremos
+            document.getElementById('prevBtn').style.opacity = currentSlide === 1 ? '0' : '1';
+            document.getElementById('prevBtn').style.pointerEvents = currentSlide === 1 ? 'none' : 'all';
+            
+            document.getElementById('nextBtn').style.opacity = currentSlide === totalSlides ? '0' : '1';
+            document.getElementById('nextBtn').style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
+        }
+
+        document.getElementById('nextBtn').addEventListener('click', () => {
+            if (currentSlide < totalSlides) {
+                currentSlide++;
+                updateSlide();
+            }
+        });
+
+        document.getElementById('prevBtn').addEventListener('click', () => {
+            if (currentSlide > 1) {
+                currentSlide--;
+                updateSlide();
+            }
+        });
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                if (currentSlide < totalSlides) {
+                    currentSlide++;
+                    updateSlide();
+                }
+            }
+            if (e.key === 'ArrowLeft') {
+                if (currentSlide > 1) {
+                    currentSlide--;
+                    updateSlide();
+                }
+            }
+        });
+        // Animación de imágenes estilo Animarket (Optimizado para fluidez total)
+        const images = document.querySelectorAll('.image-container img');
+
+        function animateImages(timestamp) {
+            // Usamos el timestamp de rAF para precisión de milisegundos
+            const elapsed = timestamp / 1000;
+            
+            // Movimiento sinusoidal orgánico (un poco más lento para mayor elegancia)
+            const x = Math.sin(elapsed * 0.3) * 4;
+            const y = Math.cos(elapsed * 0.2) * 4;
+
+            images.forEach(img => {
+                const slide = img.closest('.slide');
+                if (slide && slide.classList.contains('active')) {
+                    // Mantenemos el scale fijo para evitar tirones de redibujado
+                    img.style.transform = `scale(1.3) translate3d(${x}%, ${y}%, 0)`;
+                }
+            });
+
+            requestAnimationFrame(animateImages);
+        }
+
+        requestAnimationFrame(animateImages);
+
+        // Inicializar la primera diapositiva con un pequeño delay para activar animaciones
+        window.addEventListener('load', () => {
+            setTimeout(updateSlide, 300);
+        });
+    </script>
+</body>
+</html>
