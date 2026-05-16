@@ -203,20 +203,20 @@
             }
             
             /* Ajuste para Managed Service Grid en móvil */
-            #slide7 .grid {
+            #slide8 .grid, #slide8 div[style*="flex-direction"] {
                 display: flex !important;
                 flex-direction: column !important;
                 gap: 1rem !important;
             }
 
             /* Ajuste para ROI en móvil */
-            #slide9 .glass-container > div:last-child {
+            #slide10 .glass-container > div:last-child {
                 flex-direction: column !important;
                 gap: 2rem !important;
                 display: flex !important;
             }
             
-            #slide9 div[style*="border-left"] {
+            #slide10 div[style*="border-left"] {
                 border-left: none !important;
                 border-top: 1px solid var(--glass-border) !important;
                 width: 50% !important;
@@ -431,17 +431,19 @@
         <!-- Slide 10: ROI -->
         <div class="slide" id="slide10">
             <div class="glass-container" style="text-align: center;">
-                <h2>Un vendedor que no descansa</h2>
-                <p>Nuestra analítica demuestra el impacto en tu negocio.</p>
-                <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 2rem;">
-                    <div class="reveal-item">
-                        <div style="font-size: 4rem; font-weight: 700; color: var(--primary);">+30%</div>
-                        <p>En ventas de impulsos</p>
+                <h2>Un vendedor silencioso y constante</h2>
+                <p>Enfocamos la atención de tus clientes en los puntos clave para tu rentabilidad.</p>
+                <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; align-items: stretch;">
+                    <div class="reveal-item" style="flex: 1; max-width: 320px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-chart-line"></i></div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #fff;">Venta de Impulso</h3>
+                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">Promueve platos de alto margen, combos y postres justo en el momento de la decisión de compra.</p>
                     </div>
                     <div style="border-left: 1px solid var(--glass-border);"></div>
-                    <div class="reveal-item">
-                        <div style="font-size: 4rem; font-weight: 700; color: var(--secondary);">-50%</div>
-                        <p>Percepción de espera</p>
+                    <div class="reveal-item" style="flex: 1; max-width: 320px;">
+                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary);"><i class="fas fa-hourglass-half"></i></div>
+                        <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #fff;">Espera Amigable</h3>
+                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">El entretenimiento dinámico acorta la sensación del tiempo de espera y mejora la experiencia del cliente.</p>
                     </div>
                 </div>
             </div>
