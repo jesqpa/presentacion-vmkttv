@@ -260,10 +260,29 @@
                 margin-bottom: 1rem;
             }
 
+            .controls {
+                position: fixed;
+                top: 50%;
+                left: 0;
+                right: 0;
+                transform: translateY(-50%);
+                display: flex;
+                justify-content: space-between;
+                padding: 0 1rem;
+                pointer-events: none;
+                width: 100%;
+                z-index: 100;
+            }
+
             .btn-nav {
-                width: 50px;
-                height: 50px;
-                font-size: 1.2rem;
+                pointer-events: auto;
+                width: 45px;
+                height: 45px;
+                font-size: 1.1rem;
+                background: rgba(0,0,0,0.4) !important;
+                border: 1px solid rgba(255,255,255,0.1) !important;
+                backdrop-filter: blur(5px);
+                -webkit-backdrop-filter: blur(5px);
             }
 
             .slide.active .glass-card {
