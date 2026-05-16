@@ -203,20 +203,20 @@
             }
             
             /* Ajuste para Managed Service Grid en móvil */
-            #slide8 .grid, #slide8 div[style*="flex-direction"] {
+            #slide9 .grid, #slide9 div[style*="flex-direction"] {
                 display: flex !important;
                 flex-direction: column !important;
                 gap: 1rem !important;
             }
 
             /* Ajuste para ROI en móvil */
-            #slide10 .glass-container > div:last-child {
+            #slide11 .glass-container > div:last-child {
                 flex-direction: column !important;
                 gap: 2rem !important;
                 display: flex !important;
             }
             
-            #slide10 div[style*="border-left"] {
+            #slide11 div[style*="border-left"] {
                 border-left: none !important;
                 border-top: 1px solid var(--glass-border) !important;
                 width: 50% !important;
@@ -356,8 +356,29 @@
             </div>
         </div>
 
-        <!-- Slide 7: Publicidad para Terceros -->
+        <!-- Slide 7: Códigos QR Dinámicos -->
         <div class="slide" id="slide7">
+            <div class="glass-container">
+                <div class="grid">
+                    <div>
+                        <div class="badge" style="background: var(--secondary);">Interactividad</div>
+                        <h2>Códigos QR Dinámicos e Interactivos</h2>
+                        <p>Une el mundo físico con el digital al instante desde tu televisor.</p>
+                        <ul class="feature-list">
+                            <li><i class="fas fa-qrcode"></i> **Conexión Directa:** Tus clientes escanean la pantalla para abrir menús, promociones o tus redes sociales.</li>
+                            <li><i class="fas fa-cogs"></i> **Múltiples Utilidades:** Úsalo para capturar datos de clientes (WiFi gratis), encuestas de satisfacción o enlaces a Google Maps para opiniones.</li>
+                            <li><i class="fas fa-sync-alt"></i> **Actualización Remota:** Cambia el destino o la promoción del código QR en cualquier momento sin alterar tu video publicitario.</li>
+                        </ul>
+                    </div>
+                    <div class="image-container">
+                        <img src="images/feature_qr.png" alt="Códigos QR Dinámicos">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 8: Publicidad para Terceros -->
+        <div class="slide" id="slide8">
             <div class="glass-container">
                 <div class="grid">
                     <div>
@@ -377,8 +398,8 @@
             </div>
         </div>
 
-        <!-- Slide 8: Managed Service -->
-        <div class="slide" id="slide8">
+        <!-- Slide 9: Managed Service -->
+        <div class="slide" id="slide9">
             <div class="glass-container" style="text-align: center;">
                 <h2>Tú enciendes, nosotros operamos</h2>
                 <p>Nuestra misión es que tú te olvides de la tecnología.</p>
@@ -408,8 +429,8 @@
             </div>
         </div>
 
-        <!-- Slide 9: Resilience -->
-        <div class="slide" id="slide9">
+        <!-- Slide 10: Resilience -->
+        <div class="slide" id="slide10">
             <div class="glass-container">
                 <div class="grid">
                     <div>
@@ -428,8 +449,8 @@
             </div>
         </div>
 
-        <!-- Slide 10: ROI -->
-        <div class="slide" id="slide10">
+        <!-- Slide 11: ROI -->
+        <div class="slide" id="slide11">
             <div class="glass-container" style="text-align: center;">
                 <h2>Un vendedor silencioso y constante</h2>
                 <p>Enfocamos la atención de tus clientes en los puntos clave para tu rentabilidad.</p>
@@ -449,8 +470,8 @@
             </div>
         </div>
 
-        <!-- Slide 11: Contacto -->
-        <div class="slide" id="slide11">
+        <!-- Slide 12: Contacto -->
+        <div class="slide" id="slide12">
             <div class="glass-container" style="text-align: center;">
                 <h1>¿Listo para modernizar tu local?</h1>
                 <p>Hablemos sobre cómo podemos aumentar tus ventas hoy mismo.</p>
@@ -469,7 +490,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 11;
+        const totalSlides = 12;
 
         function updateSlide() {
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
