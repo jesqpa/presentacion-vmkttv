@@ -239,7 +239,13 @@
         
         .mockup-label { position: absolute; bottom: -10px; right: -10px; background: var(--primary); padding: 1rem; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
 
+        /* Responsive Helper Classes */
+        .show-on-mobile { display: none !important; }
+        .hide-on-mobile { display: inline-block !important; }
+
         @media (max-width: 768px) {
+            .show-on-mobile { display: inline-block !important; }
+            .hide-on-mobile { display: none !important; }
             h1 { font-size: 2.2rem; }
             h2 { font-size: 1.8rem; }
             p { font-size: 1.1rem; }
@@ -336,8 +342,13 @@
                 <p id="typewriter-container" style="min-height: 2.2em; line-height: 1.8; font-size: 1.4rem; margin: 1.5rem 0; color: #cbd5e1; text-align: center;">
                     <span id="typewriter-text" style="display: inline-block; min-height: 1.8em;"></span>
                 </p>
-                <div class="reveal-item" style="margin-top: 2.5rem; font-weight: 600; font-size: 1.1rem; color: var(--primary); letter-spacing: 0.5px;">
+                <!-- Desktop / Tablet Prompt -->
+                <div class="reveal-item hide-on-mobile" style="margin-top: 2.5rem; font-weight: 600; font-size: 1.1rem; color: var(--primary); letter-spacing: 0.5px;">
                     <i class="fas fa-keyboard" style="margin-right: 0.5rem;"></i> Usa las flechas del teclado o controles de pantalla para avanzar
+                </div>
+                <!-- Mobile Prompt -->
+                <div class="reveal-item show-on-mobile" style="margin-top: 2.5rem; font-weight: 600; font-size: 1rem; color: var(--primary); letter-spacing: 0.5px;">
+                    <i class="fas fa-hand-pointer" style="margin-right: 0.5rem;"></i> Usa los controles de pantalla para avanzar
                 </div>
             </div>
         </div>
