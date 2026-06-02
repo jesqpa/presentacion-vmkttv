@@ -501,7 +501,7 @@
             box-shadow: 0 0 10px var(--primary);
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .indicators {
                 bottom: 1.5rem;
                 padding: 0.4rem 0.8rem;
@@ -515,6 +515,13 @@
 
             .dot.active {
                 width: 16px;
+            }
+
+            .company-badge, 
+            .company-welcome-badge, 
+            .theme-toggle-btn, 
+            .customize-btn {
+                display: none !important;
             }
         }
 
@@ -557,12 +564,19 @@
             display: inline-block !important;
         }
 
-        @media (max-width: 768px) {
+        @media (max-width: 1024px) {
             .show-on-mobile {
                 display: inline-block !important;
             }
 
             .hide-on-mobile {
+                display: none !important;
+            }
+
+            .company-badge, 
+            .company-welcome-badge, 
+            .theme-toggle-btn, 
+            .customize-btn {
                 display: none !important;
             }
 
@@ -1515,8 +1529,12 @@
             const companyWelcomeBadge = document.getElementById('companyWelcomeBadge');
             const savedCompany = localStorage.getItem('companyName');
             const savedLogo = localStorage.getItem('companyLogo');
+            const isMobile = window.innerWidth <= 1024;
 
-            if (savedCompany || savedLogo) {
+            if (isMobile) {
+                if (companyBadge) companyBadge.style.display = 'none';
+                if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'none';
+            } else if (savedCompany || savedLogo) {
                 if (currentSlide === 1) {
                     if (companyBadge) companyBadge.style.display = 'none';
                     if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'inline-flex';
@@ -1833,6 +1851,19 @@
             let logoBase64 = localStorage.getItem('companyLogo') || '';
 
             function updateCompanyUI() {
+                const isMobile = window.innerWidth <= 1024;
+                if (isMobile) {
+                    if (customizeBtn) customizeBtn.style.display = 'none';
+                    if (companyBadge) companyBadge.style.display = 'none';
+                    if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'none';
+                    const themeToggleBtn = document.getElementById('themeToggleBtn');
+                    if (themeToggleBtn) themeToggleBtn.style.display = 'none';
+                    if (currentSlide === 1) {
+                        startTypewriter();
+                    }
+                    return;
+                }
+
                 const savedCompany = localStorage.getItem('companyName') || '';
                 const savedLogo = localStorage.getItem('companyLogo') || '';
 
