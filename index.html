@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -7,7 +8,9 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Quicksand:wght@700;900&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700&family=Quicksand:wght@700;900&display=swap"
+        rel="stylesheet">
     <style>
         :root {
             --primary: #6366f1;
@@ -16,6 +19,9 @@
             --light: #f8fafc;
             --glass: rgba(255, 255, 255, 0.1);
             --glass-border: rgba(255, 255, 255, 0.2);
+            --text-bright: #ffffff;
+            --text-subtitle: #cbd5e1;
+            --text-muted: #94a3b8;
         }
 
         * {
@@ -29,6 +35,122 @@
             background-color: var(--dark);
             color: var(--light);
             overflow: hidden;
+            transition: background-color 0.5s ease, color 0.5s ease;
+        }
+
+        /* Theme Toggle Button */
+        .theme-toggle-btn {
+            position: fixed;
+            top: 2rem;
+            right: 2rem;
+            z-index: 1000;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .theme-toggle-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Light Theme Overrides */
+        body.light-theme {
+            --dark: hsl(210, 40%, 95%);
+            --light: hsl(222, 47%, 12%);
+            --glass: rgba(255, 255, 255, 0.65);
+            --glass-border: rgba(0, 0, 0, 0.08);
+            --text-bright: hsl(222, 47%, 12%);
+            --text-subtitle: hsl(215, 25%, 25%);
+            --text-muted: hsl(215, 20%, 35%);
+        }
+
+        body.light-theme .theme-toggle-btn {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: hsl(222, 47%, 12%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .theme-toggle-btn:hover {
+            background: var(--secondary);
+            color: white;
+            box-shadow: 0 0 15px var(--secondary);
+        }
+
+        body.light-theme .dot {
+            background: rgba(0, 0, 0, 0.15);
+        }
+
+        body.light-theme .dot:hover {
+            background: rgba(0, 0, 0, 0.35);
+        }
+
+        body.light-theme .dot.active {
+            background: linear-gradient(135deg, var(--primary), var(--secondary)) !important;
+            box-shadow: 0 0 10px var(--primary);
+        }
+
+        body.light-theme .indicators {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .btn-nav {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: hsl(222, 47%, 12%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .btn-nav:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        body.light-theme .progress-bar-container {
+            background: rgba(0, 0, 0, 0.05);
+        }
+
+        body.light-theme .slide {
+            background: radial-gradient(circle at top right, hsl(210, 40%, 92%), var(--dark));
+        }
+
+        body.light-theme h1 {
+            background: linear-gradient(to right, #4f46e5, #db2777);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        body.light-theme h2 {
+            color: var(--text-bright);
+        }
+
+        body.light-theme p {
+            color: var(--text-subtitle);
+        }
+
+        body.light-theme .feature-list li {
+            color: var(--text-subtitle);
+        }
+
+        body.light-theme .feature-list li strong {
+            color: var(--text-bright);
         }
 
         .presentation-container {
@@ -72,29 +194,55 @@
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
         }
 
-        h1 { font-size: 4rem; font-weight: 700; margin-bottom: 1rem; line-height: 1.1; background: linear-gradient(to right, #818cf8, #f472b6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        h2 { font-size: 3rem; font-weight: 600; margin-bottom: 1.5rem; color: #fff; }
-        p { font-size: 1.5rem; line-height: 1.6; color: #cbd5e1; margin-bottom: 2rem; }
+        h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            line-height: 1.1;
+            background: linear-gradient(to right, #818cf8, #f472b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
 
-        .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center; }
+        h2 {
+            font-size: 3rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: var(--text-bright);
+        }
+
+        p {
+            font-size: 1.5rem;
+            line-height: 1.6;
+            color: var(--text-subtitle);
+            margin-bottom: 2rem;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
 
         .image-container {
             position: relative;
             width: 100%;
-            height: 400px; /* Fixed height for the canvas */
+            height: 400px;
+            /* Fixed height for the canvas */
             overflow: hidden;
             border-radius: 24px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
             border: 1px solid var(--glass-border);
             display: flex;
             align-items: center;
             justify-content: center;
         }
 
-        .image-container img:not(.no-kb) { 
+        .image-container img:not(.no-kb) {
             position: absolute;
-            width: 100%; 
-            height: 100%; 
+            width: 100%;
+            height: 100%;
             object-fit: cover;
             top: 0;
             left: 0;
@@ -107,54 +255,186 @@
         }
 
         /* Animaciones de Entrada para Contenido */
-        .slide h1, .slide h2, .slide p, .slide .feature-list li, .slide .badge, .slide .image-container, .slide .glass-card, .reveal-item {
+        .slide h1,
+        .slide h2,
+        .slide p,
+        .slide .feature-list li,
+        .slide .badge,
+        .slide .image-container,
+        .slide .glass-card,
+        .reveal-item {
             opacity: 0;
             transform: translateY(20px) scale(0.95);
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
             filter: blur(5px);
         }
 
-        .slide.active h1, .slide.active h2, .slide.active p, .slide.active .feature-list li, .slide.active .badge, .slide.active .image-container, .slide.active .glass-card, .slide.active .reveal-item {
+        .slide.active h1,
+        .slide.active h2,
+        .slide.active p,
+        .slide.active .feature-list li,
+        .slide.active .badge,
+        .slide.active .image-container,
+        .slide.active .glass-card,
+        .slide.active .reveal-item {
             opacity: 1;
             transform: translateY(0) scale(1);
             filter: blur(0);
         }
 
         /* Delays Escalonados Estilo Lectura */
-        .slide.active .badge { transition-delay: 0.2s; }
-        .slide.active h1, .slide.active h2 { transition-delay: 0.5s; }
-        .slide.active p { transition-delay: 0.9s; }
-        .slide.active .image-container { transition-delay: 1.2s; }
-        
+        .slide.active .badge {
+            transition-delay: 0.2s;
+        }
+
+        .slide.active h1,
+        .slide.active h2 {
+            transition-delay: 0.5s;
+        }
+
+        .slide.active p {
+            transition-delay: 0.9s;
+        }
+
+        .slide.active .image-container {
+            transition-delay: 1.2s;
+        }
+
         /* Lista de beneficios y items de revelado */
-        .slide.active .feature-list li:nth-child(1), .slide.active .reveal-item:nth-child(1) { transition-delay: 1.5s; }
-        .slide.active .feature-list li:nth-child(2), .slide.active .reveal-item:nth-child(2) { transition-delay: 2.2s; }
-        .slide.active .feature-list li:nth-child(3), .slide.active .reveal-item:nth-child(3) { transition-delay: 2.9s; }
-        .slide.active .feature-list li:nth-child(4), .slide.active .reveal-item:nth-child(4) { transition-delay: 3.6s; }
-        .slide.active .feature-list li:nth-child(5), .slide.active .reveal-item:nth-child(5) { transition-delay: 4.3s; }
+        .slide.active .feature-list li:nth-child(1),
+        .slide.active .reveal-item:nth-child(1) {
+            transition-delay: 1.5s;
+        }
+
+        .slide.active .feature-list li:nth-child(2),
+        .slide.active .reveal-item:nth-child(2) {
+            transition-delay: 2.2s;
+        }
+
+        .slide.active .feature-list li:nth-child(3),
+        .slide.active .reveal-item:nth-child(3) {
+            transition-delay: 2.9s;
+        }
+
+        .slide.active .feature-list li:nth-child(4),
+        .slide.active .reveal-item:nth-child(4) {
+            transition-delay: 3.6s;
+        }
+
+        .slide.active .feature-list li:nth-child(5),
+        .slide.active .reveal-item:nth-child(5) {
+            transition-delay: 4.3s;
+        }
 
         /* Cards con ritmo de lectura */
-        .slide.active .glass-card:nth-child(1) { transition-delay: 1.5s; }
-        .slide.active .glass-card:nth-child(2) { transition-delay: 2.2s; }
-        .slide.active .glass-card:nth-child(3) { transition-delay: 2.9s; }
+        .slide.active .glass-card:nth-child(1) {
+            transition-delay: 1.5s;
+        }
 
-        .schedule-tab { transition: 0.5s ease; border: 1px solid transparent; }
-        .schedule-tab.active-tab { background: rgba(255,255,255,0.15) !important; border-color: rgba(255,255,255,0.3); transform: scale(1.05); box-shadow: 0 10px 20px rgba(0,0,0,0.2); }
-        
-        .menu-image { position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1s ease; }
-        .menu-image.active-img { opacity: 1; z-index: 2; }
+        .slide.active .glass-card:nth-child(2) {
+            transition-delay: 2.2s;
+        }
 
-        .feature-list { list-style: none; }
-        .feature-list li { font-size: 1.4rem; margin-bottom: 1.5rem; position: relative; padding-left: 2.2rem; line-height: 1.5; }
-        .feature-list i { color: var(--secondary); font-size: 1.4rem; position: absolute; left: 0; top: 0.25rem; }
+        .slide.active .glass-card:nth-child(3) {
+            transition-delay: 2.9s;
+        }
 
-        .controls { position: fixed; bottom: 2rem; right: 2rem; display: flex; gap: 1rem; z-index: 100; }
-        .btn-nav { background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 1rem; border-radius: 50%; cursor: pointer; transition: 0.3s; width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
-        .btn-nav:hover { background: var(--primary); transform: scale(1.1); }
+        .schedule-tab {
+            transition: 0.5s ease;
+            border: 1px solid transparent;
+        }
 
-        .progress-bar { position: fixed; top: 0; left: 0; height: 5px; background: linear-gradient(to right, var(--primary), var(--secondary)); transition: width 0.3s ease; z-index: 200; }
+        .schedule-tab.active-tab {
+            background: rgba(255, 255, 255, 0.15) !important;
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
 
-        .logo-top { position: fixed; top: 2rem; left: 2rem; height: 40px; z-index: 100; }
+        .menu-image {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1s ease;
+        }
+
+        .menu-image.active-img {
+            opacity: 1;
+            z-index: 2;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            font-size: 1.4rem;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 2.2rem;
+            line-height: 1.5;
+            color: var(--text-subtitle);
+        }
+
+        .feature-list i {
+            color: var(--secondary);
+            font-size: 1.4rem;
+            position: absolute;
+            left: 0;
+            top: 0.25rem;
+        }
+
+        .controls {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            display: flex;
+            gap: 1rem;
+            z-index: 100;
+        }
+
+        .btn-nav {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 1rem;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 60px;
+            height: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+
+        .btn-nav:hover {
+            background: var(--primary);
+            transform: scale(1.1);
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 5px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            transition: width 0.3s ease;
+            z-index: 200;
+        }
+
+        .logo-top {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            height: 40px;
+            z-index: 100;
+        }
 
         /* Typewriter Cursor */
         .typewriter-cursor {
@@ -166,9 +446,17 @@
             vertical-align: middle;
             animation: blink 0.7s infinite;
         }
+
         @keyframes blink {
-            0%, 100% { opacity: 0; }
-            50% { opacity: 1; }
+
+            0%,
+            100% {
+                opacity: 0;
+            }
+
+            50% {
+                opacity: 1;
+            }
         }
 
         /* Navigation Dots */
@@ -186,7 +474,7 @@
             backdrop-filter: blur(10px);
             -webkit-backdrop-filter: blur(10px);
             border: 1px solid rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             transition: all 0.3s ease;
         }
 
@@ -219,10 +507,12 @@
                 padding: 0.4rem 0.8rem;
                 gap: 0.5rem;
             }
+
             .dot {
                 width: 8px;
                 height: 8px;
             }
+
             .dot.active {
                 width: 16px;
             }
@@ -235,21 +525,59 @@
         }
 
         /* Custom Styles for Specific Slides */
-        .badge { background: var(--secondary); color: white; padding: 0.5rem 1rem; border-radius: 50px; font-weight: 600; font-size: 1rem; text-transform: uppercase; margin-bottom: 1rem; display: inline-block; }
-        
-        .mockup-label { position: absolute; bottom: -10px; right: -10px; background: var(--primary); padding: 1rem; border-radius: 12px; font-weight: 700; box-shadow: 0 10px 20px rgba(0,0,0,0.3); }
+        .badge {
+            background: var(--secondary);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+            display: inline-block;
+        }
+
+        .mockup-label {
+            position: absolute;
+            bottom: -10px;
+            right: -10px;
+            background: var(--primary);
+            padding: 1rem;
+            border-radius: 12px;
+            font-weight: 700;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+        }
 
         /* Responsive Helper Classes */
-        .show-on-mobile { display: none !important; }
-        .hide-on-mobile { display: inline-block !important; }
+        .show-on-mobile {
+            display: none !important;
+        }
+
+        .hide-on-mobile {
+            display: inline-block !important;
+        }
 
         @media (max-width: 768px) {
-            .show-on-mobile { display: inline-block !important; }
-            .hide-on-mobile { display: none !important; }
-            h1 { font-size: 2.2rem; }
-            h2 { font-size: 1.8rem; }
-            p { font-size: 1.1rem; }
-            
+            .show-on-mobile {
+                display: inline-block !important;
+            }
+
+            .hide-on-mobile {
+                display: none !important;
+            }
+
+            h1 {
+                font-size: 2.2rem;
+            }
+
+            h2 {
+                font-size: 1.8rem;
+            }
+
+            p {
+                font-size: 1.1rem;
+            }
+
             .glass-container {
                 padding: 1.5rem;
                 width: 95%;
@@ -264,7 +592,8 @@
 
             .image-container {
                 height: 200px;
-                order: -1; /* Mover imagen arriba en móvil */
+                order: -1;
+                /* Mover imagen arriba en móvil */
             }
 
             .feature-list li {
@@ -291,8 +620,8 @@
                 width: 45px;
                 height: 45px;
                 font-size: 1.1rem;
-                background: rgba(0,0,0,0.4) !important;
-                border: 1px solid rgba(255,255,255,0.1) !important;
+                background: rgba(0, 0, 0, 0.4) !important;
+                border: 1px solid rgba(255, 255, 255, 0.1) !important;
                 backdrop-filter: blur(5px);
                 -webkit-backdrop-filter: blur(5px);
             }
@@ -304,21 +633,22 @@
             .slide.active .glass-card i {
                 font-size: 2rem;
             }
-            
+
             /* Ajuste para Managed Service Grid en móvil */
-            #slide9 .grid, #slide9 div[style*="flex-direction"] {
+            #slide9 .grid,
+            #slide9 div[style*="flex-direction"] {
                 display: flex !important;
                 flex-direction: column !important;
                 gap: 1rem !important;
             }
 
             /* Ajuste para ROI en móvil */
-            #slide11 .glass-container > div:last-child {
+            #slide11 .glass-container>div:last-child {
                 flex-direction: column !important;
                 gap: 2rem !important;
                 display: flex !important;
             }
-            
+
             #slide11 div[style*="border-left"] {
                 border-left: none !important;
                 border-top: 1px solid var(--glass-border) !important;
@@ -326,9 +656,301 @@
                 margin: 0 auto !important;
             }
         }
+
+        /* Company Badge styling */
+        .company-badge {
+            position: fixed;
+            top: 2rem;
+            left: 2rem;
+            z-index: 1000;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 0.75rem 1.4rem;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        body.light-theme .company-badge {
+            background: rgba(255, 255, 255, 0.8);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.05);
+        }
+
+        .company-badge i {
+            color: var(--primary);
+        }
+
+        /* Company Welcome Badge in slide 1 container */
+        .company-welcome-badge {
+            display: none;
+            align-items: center;
+            gap: 1.2rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid var(--glass-border);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 1.2rem 2.2rem;
+            border-radius: 20px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            margin-bottom: 2.5rem;
+            text-align: left;
+            transition: all 0.5s ease;
+            max-width: 100%;
+        }
+
+        body.light-theme .company-welcome-badge {
+            background: rgba(255, 255, 255, 0.75);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+        }
+
+        /* Customize Button styling */
+        .customize-btn {
+            position: fixed;
+            top: 2rem;
+            right: 6rem;
+            z-index: 1000;
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            backdrop-filter: blur(5px);
+            -webkit-backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .customize-btn:hover {
+            transform: scale(1.1) rotate(15deg);
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        body.light-theme .customize-btn {
+            background: rgba(255, 255, 255, 0.65);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: hsl(222, 47%, 12%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.light-theme .customize-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Premium Modal styling */
+        .company-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            background: rgba(0, 0, 0, 0.6);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            z-index: 2000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.4s ease;
+        }
+
+        .company-modal.active {
+            opacity: 1;
+            pointer-events: all;
+        }
+
+        .company-modal .modal-content {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            max-width: 450px;
+            width: 90%;
+            padding: 2.5rem;
+            border-radius: 20px;
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+            text-align: center;
+        }
+
+        body.light-theme .company-modal {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        body.light-theme .company-modal .modal-content {
+            background: rgba(255, 255, 255, 0.9);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.1);
+            color: hsl(222, 47%, 12%);
+        }
+
+        .company-modal h3 {
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            color: var(--text-bright);
+        }
+
+        .company-modal p {
+            font-size: 1.1rem;
+            color: var(--text-subtitle);
+            margin-bottom: 1.5rem;
+            line-height: 1.4;
+        }
+
+        .company-modal input {
+            width: 100%;
+            padding: 0.8rem 1.2rem;
+            border-radius: 12px;
+            border: 1px solid var(--glass-border);
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-bright);
+            font-family: inherit;
+            font-size: 1.1rem;
+            outline: none;
+            margin-bottom: 2rem;
+            transition: all 0.3s ease;
+        }
+
+        body.light-theme .company-modal input {
+            background: #fff;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            color: hsl(222, 47%, 12%);
+        }
+
+        .company-modal input:focus {
+            border-color: var(--primary);
+            box-shadow: 0 0 10px rgba(99, 102, 241, 0.3);
+        }
+
+        .modal-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+        }
+
+        .modal-btn {
+            padding: 0.8rem 1.8rem;
+            border-radius: 12px;
+            font-family: inherit;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: all 0.3s ease;
+        }
+
+        .modal-btn.cancel {
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-subtitle);
+            border: 1px solid var(--glass-border);
+        }
+
+        .modal-btn.cancel:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        body.light-theme .modal-btn.cancel {
+            background: #f1f5f9;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+            color: hsl(222, 47%, 12%);
+        }
+
+        body.light-theme .modal-btn.cancel:hover {
+            background: #e2e8f0;
+        }
+
+        .modal-btn.save {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .modal-btn.save:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(99, 102, 241, 0.4);
+        }
+
+        @media (max-width: 768px) {
+            .customize-btn {
+                top: 1rem;
+                right: 4.5rem;
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+        }
     </style>
 </head>
+
 <body>
+
+    <!-- Botón Toggle de Modo Claro / Oscuro -->
+    <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar modo de color">
+        <i class="fa-solid fa-sun"></i>
+    </button>
+
+    <!-- Botón Personalizar Propuesta -->
+    <button class="customize-btn" id="customizeBtn" aria-label="Personalizar propuesta">
+        <i class="fa-solid fa-building"></i>
+    </button>
+
+    <!-- Badge de Empresa Integrado, Estratégico y Sutil -->
+    <div class="company-badge" id="companyBadge" style="display: none;">
+        <img id="companyLogoImg"
+            style="height: 32px; width: auto; border-radius: 4px; display: none; object-fit: contain; background: rgba(255,255,255,0.1); padding: 2px; border: 1px solid var(--glass-border);">
+        <i class="fa-solid fa-building" id="companyLogoIcon" style="font-size: 1.4rem;"></i>
+        <div style="display: flex; flex-direction: column; text-align: left; gap: 0.1rem;">
+            <span
+                style="font-size: 0.7rem; text-transform: uppercase; letter-spacing: 1px; color: var(--secondary); font-weight: 700; line-height: 1;">Propuesta
+                de Servicio Para</span>
+            <strong id="companyBadgeText"
+                style="color: var(--text-bright); font-size: 1.15rem; font-weight: 700; line-height: 1.1;"></strong>
+        </div>
+    </div>
+
+    <!-- Modal de Personalización -->
+    <div class="company-modal" id="companyModal">
+        <div class="modal-content">
+            <h3>Personalizar Propuesta</h3>
+            <p>Ingresa el nombre de la empresa y su logo para personalizar la presentación de diapositivas:</p>
+            <input type="text" id="companyNameInput" placeholder="Ej. Restaurante Bella Italia"
+                style="margin-bottom: 1.5rem;">
+
+            <div class="logo-upload-group" style="margin-bottom: 2rem; text-align: left;">
+                <label for="companyLogoInput"
+                    style="display: block; font-size: 0.95rem; color: var(--text-subtitle); margin-bottom: 0.5rem; font-weight: 600;">Logo
+                    de la empresa (PNG/JPG):</label>
+                <input type="file" id="companyLogoInput" accept="image/*"
+                    style="width: 100%; padding: 0.5rem; font-size: 0.9rem; border: 1px dashed var(--glass-border); border-radius: 8px; background: rgba(255,255,255,0.02); color: var(--text-subtitle); outline: none; cursor: pointer;">
+                <div id="logoPreviewContainer"
+                    style="display: none; align-items: center; gap: 1rem; margin-top: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
+                    <img id="logoPreviewImg"
+                        style="height: 40px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.1); padding: 2px;">
+                    <button class="modal-btn cancel" id="removeLogoBtn"
+                        style="padding: 0.3rem 0.8rem; font-size: 0.85rem; margin-left: auto; border-radius: 6px;">Eliminar</button>
+                </div>
+            </div>
+
+            <div class="modal-buttons">
+                <button class="modal-btn cancel" id="closeCompanyModal">Cancelar</button>
+                <button class="modal-btn save" id="saveCompanyName">Guardar</button>
+            </div>
+        </div>
+    </div>
 
     <div class="progress-bar" id="progressBar" style="width: 11%;"></div>
 
@@ -336,19 +958,49 @@
         <!-- Slide 1: Portada -->
         <div class="slide" id="slide1">
             <div class="glass-container" style="text-align: center;">
-                <div class="badge reveal-item" style="font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, var(--primary), var(--secondary)); text-transform: none; font-weight: 900; font-size: 1.25rem; padding: 0.6rem 1.6rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.45), inset 0 -3px 0 rgba(0, 0, 0, 0.35), 0 8px 20px rgba(236, 72, 153, 0.45), 0 12px 30px rgba(0, 0, 0, 0.5); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); letter-spacing: 1px; margin-top: -1.8rem; margin-bottom: 2rem;">VMktTV</div>
-                <div class="reveal-item" style="font-size: 1.2rem; font-weight: 600; color: #818cf8; letter-spacing: 2px; margin-bottom: 1rem; text-transform: uppercase;">Virtual Marketing TV</div>
+
+                <!-- Bloque de la Propuesta Destacado (Portada - Diapositiva 1) -->
+                <div class="company-welcome-badge" id="companyWelcomeBadge"
+                    style="display: none; margin-bottom: 2.5rem; padding: 0.5rem 2.2rem;">
+                    <img id="companyLogoImgHero"
+                        style="height: 72px; width: auto; border-radius: 6px; display: none; object-fit: contain; background: rgba(255,255,255,0.1); padding: 4px; border: 1px solid var(--glass-border); filter: drop-shadow(0 4px 10px rgba(0,0,0,0.3));">
+                    <i class="fa-solid fa-building" id="companyLogoIconHero"
+                        style="font-size: 3rem; color: var(--primary);"></i>
+                    <div style="display: flex; flex-direction: column; text-align: left; gap: 0.2rem;">
+                        <span
+                            style="font-size: 0.75rem; text-transform: uppercase; letter-spacing: 2px; color: var(--secondary); font-weight: 700; line-height: 1;">Propuesta
+                            de Servicio Para</span>
+                        <strong id="companyBadgeTextHero"
+                            style="color: var(--text-bright); font-size: 1.6rem; font-weight: 700; line-height: 1.2;"></strong>
+                    </div>
+                </div>
+
+                <!-- Brand Title and Integrated VMktTV Badge -->
+                <div class="reveal-item"
+                    style="display: flex; flex-direction: column; align-items: center; gap: 0.6rem; margin-bottom: 2.2rem;">
+                    <span
+                        style="font-size: 1.25rem; font-weight: 700; color: #818cf8; letter-spacing: 2px; text-transform: uppercase; text-shadow: 0 0 15px rgba(129, 140, 248, 0.15);">Virtual
+                        Marketing TV</span>
+                    <div class="badge"
+                        style="font-family: 'Quicksand', sans-serif; background: linear-gradient(135deg, var(--primary), var(--secondary)); text-transform: none; font-weight: 900; font-size: 1.1rem; padding: 0.4rem 1.4rem; border-radius: 50px; border: 1px solid rgba(255, 255, 255, 0.25); box-shadow: inset 0 2px 3px rgba(255, 255, 255, 0.45), inset 0 -3px 0 rgba(0, 0, 0, 0.35), 0 6px 15px rgba(236, 72, 153, 0.35), 0 8px 25px rgba(0, 0, 0, 0.4); text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6); letter-spacing: 1px; display: inline-block; margin: 0;">
+                        VMktTV</div>
+                </div>
                 <h1>Transforma tus pantallas en tu mejor vendedor</h1>
-                <p id="typewriter-container" style="min-height: 2.2em; line-height: 1.8; font-size: 1.4rem; margin: 1.5rem 0; color: #cbd5e1; text-align: center;">
+                <p id="typewriter-container"
+                    style="min-height: 2.2em; line-height: 1.8; font-size: 1.4rem; margin: 1.5rem 0; color: #cbd5e1; text-align: center;">
                     <span id="typewriter-text" style="display: inline-block; min-height: 1.8em;"></span>
                 </p>
                 <!-- Desktop / Tablet Prompt -->
-                <div class="reveal-item hide-on-mobile" style="margin-top: 2.5rem; font-weight: 600; font-size: 1.1rem; color: var(--primary); letter-spacing: 0.5px;">
-                    <i class="fas fa-keyboard" style="margin-right: 0.5rem;"></i> Usa las flechas del teclado o controles de pantalla para avanzar
+                <div class="reveal-item hide-on-mobile"
+                    style="margin-top: 2.5rem; font-weight: 600; font-size: 1.1rem; color: var(--primary); letter-spacing: 0.5px;">
+                    <i class="fas fa-keyboard" style="margin-right: 0.5rem;"></i> Usa las flechas del teclado o
+                    controles de pantalla para avanzar
                 </div>
                 <!-- Mobile Prompt -->
-                <div class="reveal-item show-on-mobile" style="margin-top: 2.5rem; font-weight: 600; font-size: 1rem; color: var(--primary); letter-spacing: 0.5px;">
-                    <i class="fas fa-hand-pointer" style="margin-right: 0.5rem;"></i> Usa los controles de pantalla para avanzar
+                <div class="reveal-item show-on-mobile"
+                    style="margin-top: 2.5rem; font-weight: 600; font-size: 1rem; color: var(--primary); letter-spacing: 0.5px;">
+                    <i class="fas fa-hand-pointer" style="margin-right: 0.5rem;"></i> Usa los controles de pantalla para
+                    avanzar
                 </div>
             </div>
         </div>
@@ -361,11 +1013,14 @@
                     <div>
                         <div class="badge" style="background: var(--accent, #f43f5e);">El Gran Desperdicio</div>
                         <h2 style="color: #f43f5e;">Tu pantalla está encendida... pero ¿está vendiendo?</h2>
-                        <p style="font-size: 1.2rem;">Hoy en día, la mayoría de los negocios desperdician su activo más visible.</p>
+                        <p style="font-size: 1.2rem;">Hoy en día, la mayoría de los negocios desperdician su activo más
+                            visible.</p>
                         <ul class="feature-list">
                             <li><i class="fas fa-times-circle"></i> Menús estáticos que nadie mira.</li>
-                            <li><i class="fas fa-times-circle"></i> Canales de TV que distraen en lugar de invitar a comprar.</li>
-                            <li><i class="fas fa-times-circle"></i> <strong class="highlight-text">Publicidad de otras marcas</strong> que no te pagan por estar ahí.</li>
+                            <li><i class="fas fa-times-circle"></i> Canales de TV que distraen en lugar de invitar a
+                                comprar.</li>
+                            <li><i class="fas fa-times-circle"></i> <strong class="highlight-text">Publicidad de otras
+                                    marcas</strong> que no te pagan por estar ahí.</li>
                         </ul>
                     </div>
                     <div class="image-container">
@@ -387,7 +1042,8 @@
                         <h2 style="color: #fbbf24;">Soluciones obsoletas que te quitan tiempo</h2>
                         <ul class="feature-list">
                             <li><i class="fas fa-times-circle"></i> Memorias USB lentas y propensas a fallos.</li>
-                            <li><i class="fas fa-times-circle"></i> Tu personal perdiendo tiempo en ajustes técnicos.</li>
+                            <li><i class="fas fa-times-circle"></i> Tu personal perdiendo tiempo en ajustes técnicos.
+                            </li>
                             <li><i class="fas fa-times-circle"></i> Pantallas negras o errores en horas pico.</li>
                             <li><i class="fas fa-times-circle"></i> Una inversión cara que hoy no genera retorno.</li>
                         </ul>
@@ -407,7 +1063,8 @@
                     <div>
                         <div class="badge">La Solución</div>
                         <h2>Tu Propio Canal de Televisión</h2>
-                        <p>Imagina una pantalla que sepa qué mostrar según la hora del día, mientras entretiene a tus clientes.</p>
+                        <p>Imagina una pantalla que sepa qué mostrar según la hora del día, mientras entretiene a tus
+                            clientes.</p>
                         <ul class="feature-list">
                             <li><i class="fas fa-check-circle"></i> Diseño profesional incluido.</li>
                             <li><i class="fas fa-check-circle"></i> Operación remota total.</li>
@@ -426,13 +1083,16 @@
                         <h2>Menús que trabajan por ti</h2>
                         <p>El sistema cambia automáticamente lo que muestra según el horario:</p>
                         <div style="display: flex; flex-direction: column; gap: 1rem;">
-                            <div class="reveal-item schedule-tab" id="tab-breakfast" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #fcd34d;">
+                            <div class="reveal-item schedule-tab" id="tab-breakfast"
+                                style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #fcd34d;">
                                 <strong>08:00 AM:</strong> Desayunos y Cafés
                             </div>
-                            <div class="reveal-item schedule-tab" id="tab-lunch" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #f87171;">
+                            <div class="reveal-item schedule-tab" id="tab-lunch"
+                                style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #f87171;">
                                 <strong>01:00 PM:</strong> Especiales del Almuerzo
                             </div>
-                            <div class="reveal-item schedule-tab" id="tab-dinner" style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #818cf8;">
+                            <div class="reveal-item schedule-tab" id="tab-dinner"
+                                style="background: rgba(255,255,255,0.05); padding: 1rem; border-radius: 12px; border-left: 4px solid #818cf8;">
                                 <strong>07:00 PM:</strong> Cenas y Coctelería
                             </div>
                         </div>
@@ -473,28 +1133,44 @@
                     <div>
                         <div class="badge" style="background: var(--secondary);">Interactividad</div>
                         <h2 style="margin-bottom: 0.5rem;">Códigos QR Dinámicos</h2>
-                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Une el mundo físico con el digital al instante desde tu televisor.</p>
-                        
+                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Une el mundo físico con el
+                            digital al instante desde tu televisor.</p>
+
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-qrcode" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-qrcode"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conexión Directa</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Tus clientes escanean la pantalla para abrir menús, promociones o redes sociales.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conexión
+                                        Directa</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Tus clientes escanean la pantalla
+                                        para abrir menús, promociones o redes sociales.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-cogs" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-cogs"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Múltiples Utilidades</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Úsalo para encuestas de satisfacción, WiFi gratis, opiniones de Google y más.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Múltiples
+                                        Utilidades</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Úsalo para encuestas de
+                                        satisfacción, WiFi gratis, opiniones de Google y más.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-sync-alt" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-sync-alt"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Actualización Remota</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Cambia el destino o la promoción del código QR al instante y sin editar tu video.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Actualización
+                                        Remota</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Cambia el destino o la promoción
+                                        del código QR al instante y sin editar tu video.</span>
                                 </div>
                             </div>
                         </div>
@@ -515,9 +1191,12 @@
                         <h2>Tu pantalla puede pagarse sola</h2>
                         <p>Convierte tu televisor en un activo que genera ingresos directos.</p>
                         <ul class="feature-list">
-                            <li><i class="fas fa-handshake"></i> <strong class="highlight-text">Vende espacios</strong> a negocios complementarios (licorerías, postres, tiendas locales).</li>
-                            <li><i class="fas fa-dollar-sign"></i> Crea una nueva fuente de <strong class="highlight-text">facturación mensual</strong>.</li>
-                            <li><i class="fas fa-user-shield"></i> <strong class="highlight-text">Control Total:</strong> Tú decides qué marcas se anuncian en tu casa.</li>
+                            <li><i class="fas fa-handshake"></i> <strong class="highlight-text">Vende espacios</strong>
+                                a negocios complementarios (licorerías, postres, tiendas locales).</li>
+                            <li><i class="fas fa-dollar-sign"></i> Crea una nueva fuente de <strong
+                                    class="highlight-text">facturación mensual</strong>.</li>
+                            <li><i class="fas fa-user-shield"></i> <strong class="highlight-text">Control
+                                    Total:</strong> Tú decides qué marcas se anuncian en tu casa.</li>
                         </ul>
                     </div>
                     <div class="image-container">
@@ -533,25 +1212,34 @@
                 <h2>Tú enciendes, nosotros operamos</h2>
                 <p>Nuestra misión es que tú te olvides de la tecnología.</p>
                 <div style="display: flex; flex-direction: column; gap: 1.5rem; max-width: 700px; margin: 3rem auto 0;">
-                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
-                        <i class="fas fa-paint-brush" style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--secondary);"></i>
+                    <div class="glass-card"
+                        style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-paint-brush"
+                            style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--secondary);"></i>
                         <div>
                             <h3 style="margin: 0; font-size: 1.8rem;">Diseño Profesional</h3>
-                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Creamos videos y artes publicitarias a medida para tu marca.</p>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Creamos videos y artes
+                                publicitarias a medida para tu marca.</p>
                         </div>
                     </div>
-                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
-                        <i class="fas fa-cloud-upload-alt" style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--primary);"></i>
+                    <div class="glass-card"
+                        style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-cloud-upload-alt"
+                            style="font-size: 2.5rem; width: 60px; text-align: center; color: var(--primary);"></i>
                         <div>
                             <h3 style="margin: 0; font-size: 1.8rem;">Gestión Remota</h3>
-                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Actualizamos tus promociones y menús sin que tengas que tocar nada.</p>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Actualizamos tus promociones y
+                                menús sin que tengas que tocar nada.</p>
                         </div>
                     </div>
-                    <div class="glass-card" style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
-                        <i class="fas fa-power-off" style="font-size: 2.5rem; width: 60px; text-align: center; color: #4ade80;"></i>
+                    <div class="glass-card"
+                        style="padding: 1.5rem 2.5rem; background: rgba(255,255,255,0.03); border-radius: 16px; display: flex; align-items: center; gap: 2.5rem; text-align: left;">
+                        <i class="fas fa-power-off"
+                            style="font-size: 2.5rem; width: 60px; text-align: center; color: #4ade80;"></i>
                         <div>
                             <h3 style="margin: 0; font-size: 1.8rem;">Simplicidad Total</h3>
-                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Tu única tarea es encender el televisor al abrir tu local.</p>
+                            <p style="font-size: 1.1rem; margin: 0; color: #cbd5e1;">Tu única tarea es encender el
+                                televisor al abrir tu local.</p>
                         </div>
                     </div>
                 </div>
@@ -585,15 +1273,19 @@
                 <p>Enfocamos la atención de tus clientes en los puntos clave para tu rentabilidad.</p>
                 <div style="display: flex; justify-content: center; gap: 4rem; margin-top: 3rem; align-items: stretch;">
                     <div class="reveal-item" style="flex: 1; max-width: 320px;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);"><i class="fas fa-chart-line"></i></div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--primary);"><i
+                                class="fas fa-chart-line"></i></div>
                         <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #fff;">Venta de Impulso</h3>
-                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">Promueve platos de alto margen, combos y postres justo en el momento de la decisión de compra.</p>
+                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">Promueve platos de alto margen,
+                            combos y postres justo en el momento de la decisión de compra.</p>
                     </div>
                     <div style="border-left: 1px solid var(--glass-border);"></div>
                     <div class="reveal-item" style="flex: 1; max-width: 320px;">
-                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary);"><i class="fas fa-hourglass-half"></i></div>
+                        <div style="font-size: 3rem; margin-bottom: 1rem; color: var(--secondary);"><i
+                                class="fas fa-hourglass-half"></i></div>
                         <h3 style="font-size: 1.8rem; margin-bottom: 0.8rem; color: #fff;">Espera Amigable</h3>
-                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">El entretenimiento dinámico acorta la sensación del tiempo de espera y mejora la experiencia del cliente.</p>
+                        <p style="font-size: 1.1rem; color: #cbd5e1; line-height: 1.5;">El entretenimiento dinámico
+                            acorta la sensación del tiempo de espera y mejora la experiencia del cliente.</p>
                     </div>
                 </div>
             </div>
@@ -606,28 +1298,45 @@
                     <div>
                         <div class="badge" style="background: #10b981;">Implementación</div>
                         <h2 style="margin-bottom: 0.5rem;">Una inversión inteligente y accesible</h2>
-                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Llevamos la automatización a tus pantallas con un plan a tu medida.</p>
-                        
+                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Llevamos la automatización
+                            a tus pantallas con un plan a tu medida.</p>
+
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-microchip" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-microchip"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Equipamiento Simple</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Smart TVs compatibles o mini-computadoras integradas a tus pantallas.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Equipamiento
+                                        Simple</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Instalamos nuestra app en Smart TVs
+                                        o mini-PCs. Incluso las pantallas obsoletas se pueden aprovechar con
+                                        dispositivos digitales de bajo costo.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-sliders-h" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-sliders-h"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Escalabilidad Total</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Presupuesto adaptado al número de pantallas y complejidad del local.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Escalabilidad
+                                        Total</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Presupuesto adaptado al número de
+                                        pantallas y complejidad del local.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-hand-holding-usd" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-hand-holding-usd"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Máximo Ahorro</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Reemplaza los costos de impresión física por una solución digital rentable.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Máximo
+                                        Ahorro</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Reemplaza los costos de impresión
+                                        física por una solución digital rentable.</span>
                                 </div>
                             </div>
                         </div>
@@ -646,28 +1355,46 @@
                     <div>
                         <div class="badge" style="background: var(--primary);">Soporte Continuo</div>
                         <h2 style="margin-bottom: 0.5rem;">Soporte y Diseño Permanente</h2>
-                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Nos encargamos de que tu contenido siempre luzca espectacular, moderno y actualizado.</p>
-                        
+                        <p style="margin-bottom: 1.5rem; font-size: 1.1rem; color: #cbd5e1;">Nos encargamos de que tu
+                            contenido siempre luzca espectacular, moderno y actualizado.</p>
+
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-paint-brush" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-paint-brush"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Diseño Mensual Incluido</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Actualizaciones periódicas de tus menús, promociones y contenido de temporada según tu plan.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Diseño
+                                        Mensual Incluido</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Actualizaciones periódicas de tus
+                                        menús, promociones y contenido de temporada según tu plan.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-plus-circle" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-plus-circle"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Creaciones Adicionales</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Si requieres material publicitario extra o campañas especiales fuera de tu plan, las creamos a un costo razonable.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Creaciones
+                                        Adicionales</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Si requieres material publicitario
+                                        extra o campañas especiales fuera de tu plan, las creamos a un costo
+                                        razonable.</span>
                                 </div>
                             </div>
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-headset" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-headset"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong class="highlight-text" style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Asistencia y Operatividad</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Monitoreo constante y soporte técnico especializado para garantizar que tus pantallas operen sin fallas.</span>
+                                    <strong class="highlight-text"
+                                        style="font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Asistencia y
+                                        Operatividad</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Monitoreo constante y soporte
+                                        técnico especializado para garantizar que tus pantallas operen sin
+                                        fallas.</span>
                                 </div>
                             </div>
                         </div>
@@ -686,48 +1413,69 @@
                     <div>
                         <div class="badge" style="background: var(--primary);">Contacto Directo</div>
                         <h2 style="margin-bottom: 1rem;">¿Listo para activar tu canal?</h2>
-                        <p style="margin-bottom: 2rem; font-size: 1.1rem; color: #cbd5e1;">Hablemos sobre cómo podemos automatizar la visualización de tu negocio hoy mismo.</p>
-                        
+                        <p style="margin-bottom: 2rem; font-size: 1.1rem; color: #cbd5e1;">Hablemos sobre cómo podemos
+                            automatizar la visualización de tu negocio hoy mismo.</p>
+
                         <div style="display: flex; flex-direction: column; gap: 0.8rem;">
                             <!-- Teléfono -->
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-phone-alt" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-phone-alt"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--secondary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Llámanos o escríbenos</strong>
+                                    <strong
+                                        style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Llámanos
+                                        o escríbenos</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">[Tu Teléfono]</span>
                                 </div>
                             </div>
                             <!-- Email -->
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-envelope" style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-envelope"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: var(--primary);"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Correo Electrónico</strong>
+                                    <strong
+                                        style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Correo
+                                        Electrónico</strong>
                                     <span style="font-size: 0.9rem; color: #94a3b8;">[Tu Email]</span>
                                 </div>
                             </div>
                             <!-- Redes Note -->
-                            <div class="reveal-item" style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
-                                <i class="fas fa-share-alt" style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
+                            <div class="reveal-item"
+                                style="display: flex; gap: 1.2rem; background: rgba(255,255,255,0.02); padding: 1rem; border-radius: 12px; border: 1px solid var(--glass-border); align-items: center;">
+                                <i class="fas fa-share-alt"
+                                    style="font-size: 1.4rem; width: 35px; text-align: center; color: #10b981;"></i>
                                 <div>
-                                    <strong style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conéctate con nosotros</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">Escanea los códigos de la derecha para contactarnos por WhatsApp y Telegram, o seguirnos en Instagram y Facebook.</span>
+                                    <strong
+                                        style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Conéctate
+                                        con nosotros</strong>
+                                    <span style="font-size: 0.9rem; color: #94a3b8;">Escanea los códigos de la derecha
+                                        para contactarnos por WhatsApp y Telegram, o seguirnos en Instagram y
+                                        Facebook.</span>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-                        <div class="image-container" style="height: 320px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box;">
+                        <div class="image-container"
+                            style="height: 320px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box;">
                             <!-- WhatsApp -->
-                            <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp" style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp"
+                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
                             <!-- Telegram -->
-                            <img src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram" style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <img src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram"
+                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
                             <!-- Instagram -->
-                            <img src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram" style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <img src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram"
+                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
                             <!-- Facebook -->
-                            <img src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook" style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <img src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook"
+                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
                         </div>
-                        <div class="reveal-item" style="font-size: 1.8rem; font-weight: 700; color: #fff; text-transform: uppercase; letter-spacing: 2px; text-align: center; text-shadow: 0 0 10px rgba(255,255,255,0.1);">
-                            ¡Muchas Gracias!
+                        <div class="reveal-item"
+                            style="font-size: 1.35rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; text-align: center; text-shadow: 0 0 10px rgba(255,255,255,0.1); line-height: 1.4; max-width: 400px;">
+                            ¡Automatiza tu negocio con poca inversión, tú decides cuando iniciar!
                         </div>
                     </div>
                 </div>
@@ -747,7 +1495,7 @@
         function updateSlide() {
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
             document.getElementById('slide' + currentSlide).classList.add('active');
-            
+
             const progress = (currentSlide / totalSlides) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
 
@@ -759,9 +1507,28 @@
             // Ocultar botones en los extremos
             document.getElementById('prevBtn').style.opacity = currentSlide === 1 ? '0' : '1';
             document.getElementById('prevBtn').style.pointerEvents = currentSlide === 1 ? 'none' : 'all';
-            
+
             document.getElementById('nextBtn').style.opacity = currentSlide === totalSlides ? '0' : '1';
             document.getElementById('nextBtn').style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
+
+            // Sincronizar visualización de los badges de empresa personalizado según la diapositiva
+            const companyBadge = document.getElementById('companyBadge');
+            const companyWelcomeBadge = document.getElementById('companyWelcomeBadge');
+            const savedCompany = localStorage.getItem('companyName');
+            const savedLogo = localStorage.getItem('companyLogo');
+
+            if (savedCompany || savedLogo) {
+                if (currentSlide === 1) {
+                    if (companyBadge) companyBadge.style.display = 'none';
+                    if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'inline-flex';
+                } else {
+                    if (companyBadge) companyBadge.style.display = 'flex';
+                    if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'none';
+                }
+            } else {
+                if (companyBadge) companyBadge.style.display = 'none';
+                if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'none';
+            }
 
             // Activar máquina de escribir si es la diapositiva 1
             if (currentSlide === 1) {
@@ -794,6 +1561,11 @@
                 "Sin esfuerzo, sin complicaciones, solo resultados."
             ];
 
+            const savedCompany = localStorage.getItem('companyName');
+            if (savedCompany) {
+                phrases.push(`Propuesta exclusiva y personalizada para ${savedCompany}.`);
+            }
+
             let phraseIndex = 0;
             let charIndex = 0;
             let isDeleting = false;
@@ -803,12 +1575,12 @@
 
             function tick() {
                 const currentPhrase = phrases[phraseIndex];
-                
+
                 if (isDeleting) {
                     // Borrando texto
                     textElement.innerHTML = currentPhrase.substring(0, charIndex) + '<span class="typewriter-cursor"></span>';
                     charIndex--;
-                    
+
                     if (charIndex < 0) {
                         isDeleting = false;
                         phraseIndex = (phraseIndex + 1) % phrases.length;
@@ -821,7 +1593,7 @@
                     // Escribiendo texto
                     textElement.innerHTML = currentPhrase.substring(0, charIndex) + '<span class="typewriter-cursor"></span>';
                     charIndex++;
-                    
+
                     if (charIndex > currentPhrase.length) {
                         textElement.innerHTML = currentPhrase + '<span class="typewriter-cursor"></span>';
                         isDeleting = true;
@@ -874,7 +1646,7 @@
         function animateImages(timestamp) {
             // Usamos el timestamp de rAF para precisión de milisegundos
             const elapsed = timestamp / 1000;
-            
+
             // Movimiento sinusoidal orgánico (un poco más lento para mayor elegancia)
             const x = Math.sin(elapsed * 0.3) * 4;
             const y = Math.cos(elapsed * 0.2) * 4;
@@ -924,7 +1696,7 @@
         function stopMenuSimulation() {
             if (menuInterval) clearInterval(menuInterval);
             if (menuTimeout) clearTimeout(menuTimeout);
-            
+
             // Limpiar estados activos
             ['tab-breakfast', 'tab-lunch', 'tab-dinner'].forEach(id => {
                 const el = document.getElementById(id);
@@ -959,10 +1731,252 @@
         }
 
         // Inicializar la primera diapositiva con un pequeño delay para activar animaciones
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
+            // Check for GET parameters (either short ID 'p' or long Base64 'propuesta')
+            const urlParams = new URLSearchParams(window.location.search);
+            const proposalParam = urlParams.get('propuesta') || urlParams.get('p');
+            if (proposalParam) {
+                try {
+                    let decodedData = null;
+
+                    // If it is a short server ID (typically 8 characters) and running via HTTP/HTTPS, fetch from API
+                    if (proposalParam.length < 30 && window.location.protocol.startsWith('http')) {
+                        try {
+                            const response = await fetch(`../api/proposals/${proposalParam}`);
+                            if (response.ok) {
+                                decodedData = await response.json();
+                            } else {
+                                console.warn('No se pudo encontrar la propuesta en el servidor, código:', response.status);
+                            }
+                        } catch (apiErr) {
+                            console.error('Error al conectar con la API de propuestas:', apiErr);
+                        }
+                    } else {
+                        // Safe UTF-8 Base64 decoding fallback for direct URLs
+                        decodedData = JSON.parse(decodeURIComponent(escape(atob(proposalParam))));
+                    }
+
+                    if (decodedData) {
+                        if (decodedData.name) {
+                            localStorage.setItem('companyName', decodedData.name);
+                        } else {
+                            localStorage.removeItem('companyName');
+                        }
+                        if (decodedData.logo) {
+                            localStorage.setItem('companyLogo', decodedData.logo);
+                        } else {
+                            localStorage.removeItem('companyLogo');
+                        }
+
+                        // Redraw UI instantly with loaded data
+                        if (typeof updateCompanyUI === 'function') {
+                            updateCompanyUI();
+                        }
+                    }
+                    // Clean URL parameters to look professional and elegant
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } catch (e) {
+                    console.error("Error al decodificar o cargar los datos de la propuesta:", e);
+                }
+            }
+
             createIndicators();
+
+            // Recuperar tema persistente de localStorage
+            const themeToggleBtn = document.getElementById('themeToggleBtn');
+            if (themeToggleBtn) {
+                const savedTheme = localStorage.getItem('theme');
+                const icon = themeToggleBtn.querySelector('i');
+
+                if (savedTheme === 'light') {
+                    document.body.classList.add('light-theme');
+                    if (icon) icon.className = 'fa-solid fa-moon';
+                } else {
+                    if (icon) icon.className = 'fa-solid fa-sun';
+                }
+
+                themeToggleBtn.addEventListener('click', () => {
+                    document.body.classList.toggle('light-theme');
+                    const isLight = document.body.classList.contains('light-theme');
+                    localStorage.setItem('theme', isLight ? 'light' : 'dark');
+
+                    if (icon) {
+                        if (isLight) {
+                            icon.className = 'fa-solid fa-moon';
+                        } else {
+                            icon.className = 'fa-solid fa-sun';
+                        }
+                    }
+                });
+            }
+
+            // Lógica de Personalización de Empresa
+            const customizeBtn = document.getElementById('customizeBtn');
+            const companyModal = document.getElementById('companyModal');
+            const closeCompanyModal = document.getElementById('closeCompanyModal');
+            const saveCompanyName = document.getElementById('saveCompanyName');
+            const companyNameInput = document.getElementById('companyNameInput');
+            const companyLogoInput = document.getElementById('companyLogoInput');
+            const logoPreviewContainer = document.getElementById('logoPreviewContainer');
+            const logoPreviewImg = document.getElementById('logoPreviewImg');
+            const removeLogoBtn = document.getElementById('removeLogoBtn');
+            const companyBadge = document.getElementById('companyBadge');
+            const companyBadgeText = document.getElementById('companyBadgeText');
+            const companyLogoIcon = document.getElementById('companyLogoIcon');
+            const companyLogoImg = document.getElementById('companyLogoImg');
+
+            // Portada Welcome Badge references
+            const companyWelcomeBadge = document.getElementById('companyWelcomeBadge');
+            const companyBadgeTextHero = document.getElementById('companyBadgeTextHero');
+            const companyLogoIconHero = document.getElementById('companyLogoIconHero');
+            const companyLogoImgHero = document.getElementById('companyLogoImgHero');
+
+            let logoBase64 = localStorage.getItem('companyLogo') || '';
+
+            function updateCompanyUI() {
+                const savedCompany = localStorage.getItem('companyName') || '';
+                const savedLogo = localStorage.getItem('companyLogo') || '';
+
+                if (savedCompany || savedLogo) {
+                    // Hide the customize button when proposal is already configured
+                    if (customizeBtn) customizeBtn.style.display = 'none';
+
+                    // 1. Actualizar Badge Fijo (Top-Left, Diapositiva 2+)
+                    companyBadgeText.textContent = savedCompany || 'Invitado';
+                    if (savedLogo) {
+                        companyLogoImg.src = savedLogo;
+                        companyLogoImg.style.display = 'inline-block';
+                        if (companyLogoIcon) companyLogoIcon.style.display = 'none';
+                    } else {
+                        companyLogoImg.style.display = 'none';
+                        if (companyLogoIcon) companyLogoIcon.style.display = 'inline-block';
+                    }
+
+                    // Solo mostrar badge si no estamos en la diapositiva 1
+                    if (currentSlide === 1) {
+                        companyBadge.style.display = 'none';
+                    } else {
+                        companyBadge.style.display = 'flex';
+                    }
+
+                    // 2. Actualizar Welcome Badge Grande (Slide 1 Central)
+                    if (companyWelcomeBadge && companyBadgeTextHero) {
+                        companyBadgeTextHero.textContent = savedCompany || 'Invitado';
+
+                        if (savedLogo && companyLogoImgHero) {
+                            companyLogoImgHero.src = savedLogo;
+                            companyLogoImgHero.style.display = 'inline-block';
+                            if (companyLogoIconHero) companyLogoIconHero.style.display = 'none';
+                        } else if (companyLogoImgHero) {
+                            companyLogoImgHero.style.display = 'none';
+                            if (companyLogoIconHero) companyLogoIconHero.style.display = 'inline-block';
+                        }
+
+                        // Solo mostrar welcome badge grande en la diapositiva 1
+                        if (currentSlide === 1) {
+                            companyWelcomeBadge.style.display = 'inline-flex';
+                        } else {
+                            companyWelcomeBadge.style.display = 'none';
+                        }
+                    }
+                } else {
+                    // Show customization button if no proposal is set
+                    if (customizeBtn) customizeBtn.style.display = 'flex';
+
+                    companyBadge.style.display = 'none';
+                    if (companyWelcomeBadge) companyWelcomeBadge.style.display = 'none';
+                }
+
+                // Si estamos en la slide 1, reiniciar la máquina de escribir para aplicar cambios
+                if (currentSlide === 1) {
+                    startTypewriter();
+                }
+            }
+
+            if (customizeBtn) {
+                customizeBtn.addEventListener('click', () => {
+                    companyNameInput.value = localStorage.getItem('companyName') || '';
+                    logoBase64 = localStorage.getItem('companyLogo') || '';
+
+                    if (logoBase64) {
+                        logoPreviewImg.src = logoBase64;
+                        logoPreviewContainer.style.display = 'flex';
+                    } else {
+                        logoPreviewContainer.style.display = 'none';
+                        if (companyLogoInput) companyLogoInput.value = '';
+                    }
+
+                    companyModal.classList.add('active');
+                    companyNameInput.focus();
+                });
+            }
+
+            if (closeCompanyModal) {
+                closeCompanyModal.addEventListener('click', () => {
+                    companyModal.classList.remove('active');
+                });
+            }
+
+            // Manejar cambio en file input para previsualizar e instanciar base64
+            if (companyLogoInput) {
+                companyLogoInput.addEventListener('change', (e) => {
+                    const file = e.target.files[0];
+                    if (file) {
+                        const reader = new FileReader();
+                        reader.onload = (event) => {
+                            logoBase64 = event.target.result;
+                            logoPreviewImg.src = logoBase64;
+                            logoPreviewContainer.style.display = 'flex';
+                        };
+                        reader.readAsDataURL(file);
+                    }
+                });
+            }
+
+            // Eliminar logo de previsualización
+            if (removeLogoBtn) {
+                removeLogoBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    logoBase64 = '';
+                    if (companyLogoInput) companyLogoInput.value = '';
+                    logoPreviewContainer.style.display = 'none';
+                });
+            }
+
+            if (saveCompanyName) {
+                saveCompanyName.addEventListener('click', () => {
+                    const name = companyNameInput.value.trim();
+                    if (name) {
+                        localStorage.setItem('companyName', name);
+                    } else {
+                        localStorage.removeItem('companyName');
+                    }
+
+                    if (logoBase64) {
+                        localStorage.setItem('companyLogo', logoBase64);
+                    } else {
+                        localStorage.removeItem('companyLogo');
+                    }
+
+                    companyModal.classList.remove('active');
+                    updateCompanyUI();
+                });
+            }
+
+            if (companyNameInput) {
+                companyNameInput.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter') {
+                        saveCompanyName.click();
+                    }
+                });
+            }
+
+            // Inicializar UI al cargar
+            updateCompanyUI();
+
             setTimeout(updateSlide, 300);
         });
     </script>
 </body>
+
 </html>
