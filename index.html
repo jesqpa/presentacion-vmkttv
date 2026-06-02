@@ -1838,8 +1838,8 @@
                 const savedLogo = localStorage.getItem('companyLogo') || '';
 
                 if (savedCompany || savedLogo) {
-                    // Hide the customize button when proposal is already configured
-                    if (customizeBtn) customizeBtn.style.display = 'none';
+                    // Keep the customize button always visible
+                    if (customizeBtn) customizeBtn.style.display = 'flex';
 
                     // 1. Actualizar Badge Fijo (Top-Left, Diapositiva 2+)
                     companyBadgeText.textContent = savedCompany || 'Invitado';
