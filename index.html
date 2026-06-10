@@ -153,6 +153,50 @@
             color: var(--text-bright);
         }
 
+        /* Light Theme Overrides for Text Colors */
+        body.light-theme .glass-card,
+        body.light-theme .reveal-item,
+        body.light-theme .pricing-card {
+            background: rgba(0, 0, 0, 0.02) !important;
+            border-color: rgba(0, 0, 0, 0.08) !important;
+            color: var(--text-bright) !important;
+        }
+
+        body.light-theme .reveal-item strong,
+        body.light-theme .reveal-item span,
+        body.light-theme .reveal-item p,
+        body.light-theme .reveal-item h2,
+        body.light-theme .reveal-item div {
+            color: var(--text-bright) !important;
+        }
+
+        body.light-theme .reveal-item span {
+            color: var(--text-subtitle) !important;
+        }
+
+        body.light-theme .pricing-card h3 {
+            color: var(--text-bright) !important;
+            border-bottom-color: rgba(0, 0, 0, 0.1) !important;
+        }
+
+        body.light-theme .pricing-card ul,
+        body.light-theme .pricing-card li,
+        body.light-theme .pricing-card li span {
+            color: var(--text-subtitle) !important;
+        }
+
+        body.light-theme p[style*="color"] {
+            color: var(--text-subtitle) !important;
+        }
+
+        body.light-theme strong[style*="color"] {
+            color: var(--text-bright) !important;
+        }
+
+        body.light-theme span[style*="color"] {
+            color: var(--text-subtitle) !important;
+        }
+
         .presentation-container {
             width: 100vw;
             height: 100vh;
