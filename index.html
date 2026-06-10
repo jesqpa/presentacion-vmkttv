@@ -907,25 +907,113 @@
             }
         }
 
-        /* QR Wrapper and Icon styling */
+        /* Plans Slider Styles */
+        .plans-slider-wrapper {
+            position: relative;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .plans-slider-container {
+            display: flex;
+            gap: 2rem;
+            align-items: stretch;
+            width: 100%;
+            transition: all 0.3s ease;
+        }
+        /* When we have more than 3 plans, we enable sliding */
+        .plans-slider-container.slider-active {
+            flex-wrap: nowrap !important;
+            justify-content: flex-start !important;
+            overflow-x: auto; /* enables swiping on touch devices */
+            scroll-behavior: smooth;
+            padding: 1rem 0;
+            scrollbar-width: none; /* Firefox */
+        }
+        .plans-slider-container.slider-active::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera */
+        }
+        /* Slider Navigation Buttons */
+        .plan-nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid var(--glass-border);
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: absolute;
+            z-index: 100;
+        }
+        .plan-nav-btn.prev {
+            left: -2.5rem;
+        }
+        .plan-nav-btn.next {
+            right: -2.5rem;
+        }
+        .plan-nav-btn:hover {
+            transform: scale(1.1);
+            background: var(--primary);
+            box-shadow: 0 0 15px var(--primary);
+        }
+        body.light-theme .plan-nav-btn {
+            background: rgba(0, 0, 0, 0.05);
+            border: 1px solid rgba(0, 0, 0, 0.08);
+            color: hsl(222, 47%, 12%);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        body.light-theme .plan-nav-btn:hover {
+            background: var(--primary);
+            color: white;
+            box-shadow: 0 0 15px var(--primary);
+        }
+        
+        .plans-slider-container.slider-active .pricing-card {
+            flex: 0 0 320px !important; /* Fix the width in slider mode so it doesn't compress */
+        }
+
+        /* Adjustments on mobile or small screens */
+        @media (max-width: 1024px) {
+            .plan-nav-btn.prev {
+                left: -0.5rem;
+            }
+            .plan-nav-btn.next {
+                right: -0.5rem;
+            }
+            .plans-slider-container.slider-active {
+                padding: 1rem 0.5rem;
+            }
+        }
+
+        /* QR Wrapper and Center Icons styling */
         .qr-wrapper {
             position: relative;
-            width: 110px;
+            width: 140px;
             background: white;
-            padding: 6px;
-            padding-top: 32px;
-            border-radius: 12px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.35);
-            border: 1px solid rgba(255,255,255,0.05);
+            padding: 8px;
+            padding-top: 36px;
+            border-radius: 14px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+            border: 1px solid rgba(255,255,255,0.08);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            transition: all 0.3s ease;
         }
-
+        
         .qr-wrapper img {
             width: 100% !important;
-            height: auto !important;
+            height: 100% !important;
             object-fit: contain !important;
             border-radius: 6px !important;
             display: block !important;
@@ -954,7 +1042,7 @@
         }
 
         .qr-center-icon i {
-            font-size: 0.85rem;
+            font-size: 1rem;
             line-height: 1;
             display: block;
         }
@@ -973,7 +1061,6 @@
     <button class="theme-toggle-btn" id="themeToggleBtn" aria-label="Cambiar modo de color">
         <i class="fa-solid fa-sun"></i>
     </button>
-
 
     <!-- Badge de Empresa Integrado, Estratégico y Sutil -->
     <div class="company-badge" id="companyBadge" style="display: none;">
@@ -1443,6 +1530,29 @@
             </div>
         </div>
 
+        <!-- Slide Economic: Propuesta Económica -->
+        <div class="slide" id="slideEconomic" style="display: none;">
+            <div class="glass-container" style="text-align: center; max-width: 1100px; width: 95%;">
+                <div class="badge" style="background: var(--secondary); margin-bottom: 0.5rem;">Propuesta Económica</div>
+                <h2 style="margin-bottom: 0.5rem; font-size: 2.2rem; color: #fff;">Planes y Alternativas a tu Medida</h2>
+                <p style="margin-bottom: 2.5rem; font-size: 1.15rem; color: #cbd5e1;">Selecciona el paquete que mejor se adapte al ritmo de crecimiento de tu negocio.</p>
+                
+                <div class="plans-slider-wrapper">
+                    <button id="planPrevBtn" class="plan-nav-btn prev" style="display: none;" aria-label="Plan anterior">
+                        <i class="fas fa-chevron-left"></i>
+                    </button>
+                    
+                    <div id="pricingContainer" class="plans-slider-container" style="display: flex; justify-content: center; gap: 2rem; align-items: stretch; flex-wrap: wrap; margin-top: 1rem; width: 100%;">
+                        <!-- Plans rendered dynamically -->
+                    </div>
+                    
+                    <button id="planNextBtn" class="plan-nav-btn next" style="display: none;" aria-label="Siguiente plan">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <!-- Slide 14: Contacto -->
         <div class="slide" id="slide14">
             <div class="glass-container">
@@ -1463,7 +1573,7 @@
                                     <strong
                                         style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Llámanos
                                         o escríbenos</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">[Tu Teléfono]</span>
+                                    <span id="contactPhoneText" style="font-size: 0.9rem; color: #94a3b8;">[Tu Teléfono]</span>
                                 </div>
                             </div>
                             <!-- Email -->
@@ -1475,7 +1585,7 @@
                                     <strong
                                         style="color: #fff; font-size: 1.05rem; display: block; margin-bottom: 0.1rem;">Correo
                                         Electrónico</strong>
-                                    <span style="font-size: 0.9rem; color: #94a3b8;">[Tu Email]</span>
+                                    <span id="contactEmailText" style="font-size: 0.9rem; color: #94a3b8;">[Tu Email]</span>
                                 </div>
                             </div>
                             <!-- Redes Note -->
@@ -1494,12 +1604,12 @@
                             </div>
                         </div>
                     </div>
-                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
                         <div class="image-container"
                             style="height: auto; min-height: 180px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 1.8rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box; border-radius: 16px;">
                             <!-- WhatsApp -->
                             <div class="qr-wrapper">
-                                <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp">
+                                <img id="contactWhatsappQr" src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp">
                                 <div class="qr-center-icon">
                                     <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
                                     <span>WhatsApp</span>
@@ -1507,7 +1617,7 @@
                             </div>
                             <!-- Telegram -->
                             <div class="qr-wrapper">
-                                <img src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram">
+                                <img id="contactTelegramQr" src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram">
                                 <div class="qr-center-icon">
                                     <i class="fa-brands fa-telegram" style="color: #24A1DE;"></i>
                                     <span>Telegram</span>
@@ -1515,7 +1625,7 @@
                             </div>
                             <!-- Instagram -->
                             <div class="qr-wrapper">
-                                <img src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram">
+                                <img id="contactInstagramQr" src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram">
                                 <div class="qr-center-icon">
                                     <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
                                     <span>Instagram</span>
@@ -1523,7 +1633,7 @@
                             </div>
                             <!-- Facebook -->
                             <div class="qr-wrapper">
-                                <img src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook">
+                                <img id="contactFacebookQr" src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook">
                                 <div class="qr-center-icon">
                                     <i class="fa-brands fa-facebook" style="color: #1877F2;"></i>
                                     <span>Facebook</span>
@@ -1547,7 +1657,7 @@
 
     <script>
         let currentSlide = 1;
-        const totalSlides = 14;
+        let totalSlides = 14;
 
         function updateSlide() {
             document.querySelectorAll('.slide').forEach(s => s.classList.remove('active'));
@@ -1838,6 +1948,24 @@
                         } else {
                             localStorage.removeItem('companyLogo');
                         }
+                        if (decodedData.plans) {
+                            localStorage.setItem('companyPlans', JSON.stringify(decodedData.plans));
+                        } else {
+                            localStorage.removeItem('companyPlans');
+                        }
+                        if (decodedData.hiddenSlides) {
+                            localStorage.setItem('companyHiddenSlides', JSON.stringify(decodedData.hiddenSlides));
+                        } else {
+                            localStorage.removeItem('companyHiddenSlides');
+                        }
+                        
+                        localStorage.setItem('companyPhone', decodedData.contactPhone || '');
+                        localStorage.setItem('companyEmail', decodedData.contactEmail || '');
+                        localStorage.setItem('companyWhatsapp', decodedData.contactWhatsapp || '');
+                        localStorage.setItem('companyTelegram', decodedData.contactTelegram || '');
+                        localStorage.setItem('companyInstagram', decodedData.contactInstagram || '');
+                        localStorage.setItem('companyFacebook', decodedData.contactFacebook || '');
+
                         // Store custom typewriter phrases from proposal
                         if (decodedData.typewriterPhrases && decodedData.typewriterPhrases.length > 0) {
                             localStorage.setItem('typewriterPhrases', JSON.stringify(decodedData.typewriterPhrases));
@@ -1908,9 +2036,195 @@
             const companyLogoIconHero = document.getElementById('companyLogoIconHero');
             const companyLogoImgHero = document.getElementById('companyLogoImgHero');
 
-            let logoBase64 = localStorage.getItem('companyLogo') || '';
+            function escapeHTML(str) {
+                return str
+                    .replace(/&/g, '&amp;')
+                    .replace(/</g, '&lt;')
+                    .replace(/>/g, '&gt;')
+                    .replace(/"/g, '&quot;')
+                    .replace(/'/g, '&#039;');
+            }
+
+            function smoothScrollTo(element, target, duration) {
+                const start = element.scrollLeft;
+                const change = target - start;
+                let currentTime = 0;
+                const increment = 16;
+                
+                const easeInOutQuad = (t, b, c, d) => {
+                    t /= d/2;
+                    if (t < 1) return c/2*t*t + b;
+                    t--;
+                    return -c/2 * (t*(t-2) - 1) + b;
+                };
+                
+                const animateScroll = () => {
+                    currentTime += increment;
+                    const val = easeInOutQuad(currentTime, start, change, duration);
+                    element.scrollLeft = val;
+                    if (currentTime < duration) {
+                        requestAnimationFrame(animateScroll);
+                    } else {
+                        element.scrollLeft = target;
+                    }
+                };
+                requestAnimationFrame(animateScroll);
+            }
 
             function updateCompanyUI() {
+                // Store original IDs and reset displays
+                const slides = Array.from(document.querySelectorAll('.slide'));
+                slides.forEach(slide => {
+                    if (!slide.hasAttribute('data-original-id')) {
+                        slide.setAttribute('data-original-id', slide.id);
+                    }
+                    const originalId = slide.getAttribute('data-original-id');
+                    slide.id = originalId;
+                    if (originalId !== 'slideEconomic') {
+                        slide.style.display = 'flex'; // Reset default
+                    }
+                });
+
+                // Hide slides explicitly listed as hidden in companyHiddenSlides
+                const savedHiddenSlides = localStorage.getItem('companyHiddenSlides');
+                if (savedHiddenSlides) {
+                    const hiddenSlides = JSON.parse(savedHiddenSlides);
+                    if (Array.isArray(hiddenSlides)) {
+                        hiddenSlides.forEach(origId => {
+                            const slideEl = slides.find(s => s.getAttribute('data-original-id') === origId);
+                            if (slideEl) {
+                                slideEl.style.display = 'none';
+                            }
+                        });
+                    }
+                }
+
+                // Render economic plans dynamically
+                const savedPlans = localStorage.getItem('companyPlans');
+                const economicSlide = document.getElementById('slideEconomic');
+                const pricingContainer = document.getElementById('pricingContainer');
+                
+                if (savedPlans) {
+                    const plans = JSON.parse(savedPlans);
+                    if (plans && plans.length > 0) {
+                        if (economicSlide) {
+                            let isEconomicHidden = false;
+                            const savedHiddenSlides = localStorage.getItem('companyHiddenSlides');
+                            if (savedHiddenSlides) {
+                                const hiddenSlides = JSON.parse(savedHiddenSlides);
+                                if (Array.isArray(hiddenSlides) && hiddenSlides.includes('slideEconomic')) {
+                                    isEconomicHidden = true;
+                                }
+                            }
+                            economicSlide.style.display = isEconomicHidden ? 'none' : 'flex';
+                        }
+                        if (pricingContainer) {
+                            pricingContainer.innerHTML = plans.map(plan => `
+                                <div class="glass-card pricing-card" style="flex: 1; min-width: 260px; max-width: 320px; padding: 2rem; border-radius: 16px; background: rgba(255,255,255,0.03); border: 1px solid var(--glass-border); display: flex; flex-direction: column; justify-content: space-between; transition: all 0.3s ease; text-align: left; box-shadow: 0 15px 35px rgba(0,0,0,0.3);">
+                                    <div>
+                                        <h3 style="font-size: 1.5rem; font-weight: 700; margin-bottom: 0.5rem; color: #fff; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 0.8rem; display: flex; align-items: center; gap: 0.5rem;">
+                                            <i class="fa-solid fa-gem" style="color: var(--secondary); font-size: 1.1rem;"></i> ${escapeHTML(plan.name)}
+                                        </h3>
+                                        <div class="price" style="font-size: 2.2rem; font-weight: 700; color: var(--primary); margin: 1rem 0; text-shadow: 0 0 10px rgba(99,102,241,0.2);">
+                                            ${escapeHTML(plan.price)}
+                                        </div>
+                                        <ul style="list-style: none; margin: 1.5rem 0; padding: 0; display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.95rem; color: #cbd5e1;">
+                                            ${plan.features.map(f => `
+                                                <li style="display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.4;">
+                                                    <i class="fas fa-check-circle" style="color: #10b981; margin-top: 0.2rem; font-size: 0.95rem; flex-shrink: 0;"></i>
+                                                    <span>${escapeHTML(f)}</span>
+                                                </li>
+                                            `).join('')}
+                                        </ul>
+                                    </div>
+                                </div>
+                            `).join('');
+
+                            const prevBtn = document.getElementById('planPrevBtn');
+                            const nextBtn = document.getElementById('planNextBtn');
+
+                            if (plans.length > 3) {
+                                pricingContainer.classList.add('slider-active');
+                                if (prevBtn) prevBtn.style.display = 'flex';
+                                if (nextBtn) nextBtn.style.display = 'flex';
+
+                                if (prevBtn && !prevBtn.dataset.listenerBound) {
+                                    prevBtn.dataset.listenerBound = 'true';
+                                    prevBtn.addEventListener('click', () => {
+                                        smoothScrollTo(pricingContainer, pricingContainer.scrollLeft - 340, 400);
+                                    });
+                                }
+                                if (nextBtn && !nextBtn.dataset.listenerBound) {
+                                    nextBtn.dataset.listenerBound = 'true';
+                                    nextBtn.addEventListener('click', () => {
+                                        smoothScrollTo(pricingContainer, pricingContainer.scrollLeft + 340, 400);
+                                    });
+                                }
+
+                                const checkScroll = () => {
+                                    if (pricingContainer.scrollLeft <= 5) {
+                                        if (prevBtn) {
+                                            prevBtn.style.opacity = '0.3';
+                                            prevBtn.style.pointerEvents = 'none';
+                                        }
+                                    } else {
+                                        if (prevBtn) {
+                                            prevBtn.style.opacity = '1';
+                                            prevBtn.style.pointerEvents = 'all';
+                                        }
+                                    }
+
+                                    const maxScroll = pricingContainer.scrollWidth - pricingContainer.clientWidth;
+                                    if (pricingContainer.scrollLeft >= maxScroll - 5) {
+                                        if (nextBtn) {
+                                            nextBtn.style.opacity = '0.3';
+                                            nextBtn.style.pointerEvents = 'none';
+                                        }
+                                    } else {
+                                        if (nextBtn) {
+                                            nextBtn.style.opacity = '1';
+                                            nextBtn.style.pointerEvents = 'all';
+                                        }
+                                    }
+                                };
+
+                                pricingContainer.removeEventListener('scroll', checkScroll);
+                                pricingContainer.addEventListener('scroll', checkScroll);
+                                window.addEventListener('resize', checkScroll);
+                                setTimeout(checkScroll, 100);
+                            } else {
+                                pricingContainer.classList.remove('slider-active');
+                                if (prevBtn) prevBtn.style.display = 'none';
+                                if (nextBtn) nextBtn.style.display = 'none';
+                            }
+                        }
+                    } else {
+                        if (economicSlide) economicSlide.style.display = 'none';
+                    }
+                } else {
+                    if (economicSlide) economicSlide.style.display = 'none';
+                }
+
+                // Re-calculate visible slides and adjust IDs to avoid duplicate ID hits
+                const allSlides = Array.from(document.querySelectorAll('.slide'));
+                const visibleSlides = allSlides.filter(s => s.style.display !== 'none');
+                const hiddenSlides = allSlides.filter(s => s.style.display === 'none');
+
+                visibleSlides.forEach((slide, index) => {
+                    slide.id = 'slide' + (index + 1);
+                });
+
+                hiddenSlides.forEach((slide, index) => {
+                    slide.id = 'slide-hidden-' + (index + 1);
+                });
+
+                totalSlides = visibleSlides.length;
+
+                // Re-create indicators to match new slide count
+                const existingIndicators = document.querySelector('.indicators');
+                if (existingIndicators) existingIndicators.remove();
+                createIndicators();
+
                 const isMobile = window.innerWidth <= 1024;
                 if (isMobile) {
                     if (customizeBtn) customizeBtn.style.display = 'none';
@@ -1981,6 +2295,44 @@
                 if (currentSlide === 1) {
                     startTypewriter();
                 }
+
+                // Update contact details and generate QRs dynamically
+                const contactPhone = localStorage.getItem('companyPhone');
+                const contactEmail = localStorage.getItem('companyEmail');
+                const contactWhatsapp = localStorage.getItem('companyWhatsapp');
+                const contactTelegram = localStorage.getItem('companyTelegram');
+                const contactInstagram = localStorage.getItem('companyInstagram');
+                const contactFacebook = localStorage.getItem('companyFacebook');
+
+                const phoneTextEl = document.getElementById('contactPhoneText');
+                if (phoneTextEl) phoneTextEl.textContent = contactPhone || '[Tu Teléfono]';
+                
+                const emailTextEl = document.getElementById('contactEmailText');
+                if (emailTextEl) emailTextEl.textContent = contactEmail || '[Tu Email]';
+
+                const qrBase = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=';
+
+                const updateQr = (imgId, linkVal, fallbackTemplateUrl) => {
+                    const imgEl = document.getElementById(imgId);
+                    if (imgEl) {
+                        const wrapperEl = imgEl.parentElement;
+                        const targetEl = (wrapperEl && wrapperEl.classList.contains('qr-wrapper')) ? wrapperEl : imgEl;
+                        const hasCustomLink = linkVal && linkVal.trim() !== '' && !linkVal.includes('#');
+                        
+                        if (hasCustomLink) {
+                            imgEl.src = qrBase + encodeURIComponent(linkVal.trim());
+                            targetEl.style.display = 'flex';
+                            targetEl.style.opacity = '1';
+                        } else {
+                            targetEl.style.display = 'none';
+                        }
+                    }
+                };
+
+                updateQr('contactWhatsappQr', contactWhatsapp, 'https://wa.me/######');
+                updateQr('contactTelegramQr', contactTelegram, 'https://t.me/######');
+                updateQr('contactInstagramQr', contactInstagram, 'https://instagram.com/######');
+                updateQr('contactFacebookQr', contactFacebook, 'https://facebook.com/######');
             }
 
             if (customizeBtn) {
