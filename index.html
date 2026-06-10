@@ -906,6 +906,64 @@
                 display: none !important;
             }
         }
+
+        /* QR Wrapper and Icon styling */
+        .qr-wrapper {
+            position: relative;
+            width: 110px;
+            background: white;
+            padding: 6px;
+            padding-top: 32px;
+            border-radius: 12px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.35);
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .qr-wrapper img {
+            width: 100% !important;
+            height: auto !important;
+            object-fit: contain !important;
+            border-radius: 6px !important;
+            display: block !important;
+            box-shadow: none !important;
+            border: none !important;
+            transform: none !important;
+            position: static !important;
+            opacity: 1 !important;
+        }
+
+        .qr-center-icon {
+            position: absolute;
+            top: 6px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: white;
+            border-radius: 20px;
+            padding: 4px 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            z-index: 2;
+            white-space: nowrap;
+        }
+
+        .qr-center-icon i {
+            font-size: 0.85rem;
+            line-height: 1;
+            display: block;
+        }
+
+        .qr-center-icon span {
+            color: #333;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
     </style>
 </head>
 
@@ -916,10 +974,6 @@
         <i class="fa-solid fa-sun"></i>
     </button>
 
-    <!-- Botón Personalizar Propuesta -->
-    <button class="customize-btn" id="customizeBtn" aria-label="Personalizar propuesta">
-        <i class="fa-solid fa-building"></i>
-    </button>
 
     <!-- Badge de Empresa Integrado, Estratégico y Sutil -->
     <div class="company-badge" id="companyBadge" style="display: none;">
@@ -932,36 +986,6 @@
                 de Servicio Para</span>
             <strong id="companyBadgeText"
                 style="color: var(--text-bright); font-size: 1.15rem; font-weight: 700; line-height: 1.1;"></strong>
-        </div>
-    </div>
-
-    <!-- Modal de Personalización -->
-    <div class="company-modal" id="companyModal">
-        <div class="modal-content">
-            <h3>Personalizar Propuesta</h3>
-            <p>Ingresa el nombre de la empresa y su logo para personalizar la presentación de diapositivas:</p>
-            <input type="text" id="companyNameInput" placeholder="Ej. Restaurante Bella Italia"
-                style="margin-bottom: 1.5rem;">
-
-            <div class="logo-upload-group" style="margin-bottom: 2rem; text-align: left;">
-                <label for="companyLogoInput"
-                    style="display: block; font-size: 0.95rem; color: var(--text-subtitle); margin-bottom: 0.5rem; font-weight: 600;">Logo
-                    de la empresa (PNG/JPG):</label>
-                <input type="file" id="companyLogoInput" accept="image/*"
-                    style="width: 100%; padding: 0.5rem; font-size: 0.9rem; border: 1px dashed var(--glass-border); border-radius: 8px; background: rgba(255,255,255,0.02); color: var(--text-subtitle); outline: none; cursor: pointer;">
-                <div id="logoPreviewContainer"
-                    style="display: none; align-items: center; gap: 1rem; margin-top: 0.8rem; background: rgba(255,255,255,0.05); padding: 0.5rem; border-radius: 8px; border: 1px solid var(--glass-border);">
-                    <img id="logoPreviewImg"
-                        style="height: 40px; width: auto; object-fit: contain; border-radius: 4px; background: rgba(255,255,255,0.1); padding: 2px;">
-                    <button class="modal-btn cancel" id="removeLogoBtn"
-                        style="padding: 0.3rem 0.8rem; font-size: 0.85rem; margin-left: auto; border-radius: 6px;">Eliminar</button>
-                </div>
-            </div>
-
-            <div class="modal-buttons">
-                <button class="modal-btn cancel" id="closeCompanyModal">Cancelar</button>
-                <button class="modal-btn save" id="saveCompanyName">Guardar</button>
-            </div>
         </div>
     </div>
 
@@ -1470,21 +1494,41 @@
                             </div>
                         </div>
                     </div>
-                    <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
+                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
                         <div class="image-container"
-                            style="height: 320px; display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; padding: 1.5rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box;">
+                            style="height: auto; min-height: 180px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 1.8rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box; border-radius: 16px;">
                             <!-- WhatsApp -->
-                            <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp"
-                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <div class="qr-wrapper">
+                                <img src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp">
+                                <div class="qr-center-icon">
+                                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+                                    <span>WhatsApp</span>
+                                </div>
+                            </div>
                             <!-- Telegram -->
-                            <img src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram"
-                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <div class="qr-wrapper">
+                                <img src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram">
+                                <div class="qr-center-icon">
+                                    <i class="fa-brands fa-telegram" style="color: #24A1DE;"></i>
+                                    <span>Telegram</span>
+                                </div>
+                            </div>
                             <!-- Instagram -->
-                            <img src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram"
-                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <div class="qr-wrapper">
+                                <img src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram">
+                                <div class="qr-center-icon">
+                                    <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
+                                    <span>Instagram</span>
+                                </div>
+                            </div>
                             <!-- Facebook -->
-                            <img src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook"
-                                style="width: 110px; height: 110px; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.3); border: 1px solid rgba(255,255,255,0.05); transform: none; position: relative; top: auto; left: auto; object-fit: contain;">
+                            <div class="qr-wrapper">
+                                <img src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook">
+                                <div class="qr-center-icon">
+                                    <i class="fa-brands fa-facebook" style="color: #1877F2;"></i>
+                                    <span>Facebook</span>
+                                </div>
+                            </div>
                         </div>
                         <div class="reveal-item"
                             style="font-size: 1.35rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; text-align: center; text-shadow: 0 0 10px rgba(255,255,255,0.1); line-height: 1.4; max-width: 400px;">
@@ -1572,16 +1616,26 @@
 
             textElement.innerHTML = '';
 
-            const phrases = [
+            // Use custom phrases from proposal, or default set
+            const DEFAULT_PHRASES = [
                 "El canal de televisión por internet exclusivo para tu negocio.",
                 "Permítenos administrar tu contenido visual publicitario.",
                 "Sin esfuerzo, sin complicaciones, solo resultados."
             ];
 
+            let savedPhrases = [];
+            try {
+                const stored = localStorage.getItem('typewriterPhrases');
+                if (stored) savedPhrases = JSON.parse(stored);
+            } catch (e) { savedPhrases = []; }
+
+            const phrases = (savedPhrases.length > 0) ? savedPhrases : [...DEFAULT_PHRASES];
+
+            // Replace {cliente} token with the actual company name in each phrase
             const savedCompany = localStorage.getItem('companyName');
-            if (savedCompany) {
-                phrases.push(`Propuesta exclusiva y personalizada para ${savedCompany}.`);
-            }
+            const resolvedPhrases = phrases.map(p =>
+                savedCompany ? p.replace(/\{cliente\}/gi, savedCompany) : p.replace(/\{cliente\}[^.]*/gi, '')
+            ).filter(p => p.trim().length > 1);
 
             let phraseIndex = 0;
             let charIndex = 0;
@@ -1591,7 +1645,7 @@
             const delayBetweenPhrases = 3500; // 3.5 segundos de lectura
 
             function tick() {
-                const currentPhrase = phrases[phraseIndex];
+                const currentPhrase = resolvedPhrases[phraseIndex];
 
                 if (isDeleting) {
                     // Borrando texto
@@ -1600,7 +1654,7 @@
 
                     if (charIndex < 0) {
                         isDeleting = false;
-                        phraseIndex = (phraseIndex + 1) % phrases.length;
+                        phraseIndex = (phraseIndex + 1) % resolvedPhrases.length;
                         charIndex = 0;
                         typewriterTimeout = setTimeout(tick, 500);
                     } else {
@@ -1783,6 +1837,12 @@
                             localStorage.setItem('companyLogo', decodedData.logo);
                         } else {
                             localStorage.removeItem('companyLogo');
+                        }
+                        // Store custom typewriter phrases from proposal
+                        if (decodedData.typewriterPhrases && decodedData.typewriterPhrases.length > 0) {
+                            localStorage.setItem('typewriterPhrases', JSON.stringify(decodedData.typewriterPhrases));
+                        } else {
+                            localStorage.removeItem('typewriterPhrases');
                         }
 
                         // Redraw UI instantly with loaded data
