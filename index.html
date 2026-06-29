@@ -324,7 +324,7 @@
         .image-container {
             position: relative;
             width: 100%;
-            height: 400px;
+            height: 520px;
             /* Fixed height for the canvas */
             overflow: hidden;
             border-radius: 24px;
@@ -1561,7 +1561,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="image-container" style="height: 300px;">
+                    <div class="image-container" style="height: 520px;">
                         <img src="images/feature_investment.png" alt="Inversión y Hardware">
                     </div>
                 </div>
@@ -1619,7 +1619,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="image-container" style="height: 300px;">
+                    <div class="image-container" style="height: 520px;">
                         <img src="images/feature_support.png" alt="Soporte y Diseño">
                     </div>
                 </div>
@@ -2025,6 +2025,45 @@
             // Check for GET parameters (either short ID 'p' or long Base64 'propuesta')
             const urlParams = new URLSearchParams(window.location.search);
             const proposalParam = urlParams.get('propuesta') || urlParams.get('p');
+            
+            const showExpiredMessage = () => {
+                if (typeof stopMenuSimulation === 'function') stopMenuSimulation();
+                const overlay = document.createElement('div');
+                overlay.style.position = 'fixed';
+                overlay.style.top = '0';
+                overlay.style.left = '0';
+                overlay.style.width = '100vw';
+                overlay.style.height = '100vh';
+                overlay.style.backgroundColor = '#0f172a';
+                overlay.style.display = 'flex';
+                overlay.style.flexDirection = 'column';
+                overlay.style.alignItems = 'center';
+                overlay.style.justifyContent = 'center';
+                overlay.style.zIndex = '99999';
+                overlay.style.color = '#ffffff';
+                overlay.style.fontFamily = "'Outfit', sans-serif";
+                overlay.style.padding = '2rem';
+                overlay.style.textAlign = 'center';
+                overlay.innerHTML = `
+                    <div style="background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.08); padding: 3rem; border-radius: 24px; max-width: 500px; box-shadow: 0 20px 50px rgba(0,0,0,0.5); backdrop-filter: blur(10px);">
+                        <div style="font-size: 4rem; color: #ef4444; margin-bottom: 1.5rem;">
+                            <i class="fa-solid fa-triangle-exclamation"></i>
+                        </div>
+                        <h1 style="font-size: 2rem; font-weight: 700; margin-bottom: 1rem; color: #ffffff; letter-spacing: -0.5px;">Propuesta Vencida</h1>
+                        <p style="font-size: 1.15rem; color: #94a3b8; line-height: 1.6; margin-bottom: 2rem;">
+                            Esta propuesta de servicio ha vencido y ya no tiene validez legal o comercial.
+                        </p>
+                        <div style="font-size: 0.9rem; color: #64748b;">
+                            Virtual Marketing TV &bull; VMktTV
+                        </div>
+                    </div>
+                `;
+                document.body.appendChild(overlay);
+                document.body.style.overflow = 'hidden';
+                window.addEventListener('keydown', (e) => e.stopPropagation(), true);
+                window.addEventListener('mousedown', (e) => e.stopPropagation(), true);
+            };
+
             if (proposalParam) {
                 try {
                     let decodedData = null;
@@ -2037,13 +2076,23 @@
                                 decodedData = await response.json();
                             } else {
                                 console.warn('No se pudo encontrar la propuesta en el servidor, código:', response.status);
+                                showExpiredMessage();
+                                return;
                             }
                         } catch (apiErr) {
                             console.error('Error al conectar con la API de propuestas:', apiErr);
+                            showExpiredMessage();
+                            return;
                         }
                     } else {
                         // Safe UTF-8 Base64 decoding fallback for direct URLs
-                        decodedData = JSON.parse(decodeURIComponent(escape(atob(proposalParam))));
+                        try {
+                            decodedData = JSON.parse(decodeURIComponent(escape(atob(proposalParam))));
+                        } catch (e) {
+                            console.error(e);
+                            showExpiredMessage();
+                            return;
+                        }
                     }
 
                     if (decodedData) {
