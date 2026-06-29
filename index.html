@@ -2101,6 +2101,13 @@
                     }
 
                     if (decodedData) {
+                        // Check if presentationType matches this channel
+                        const pType = decodedData.presentationType || 'comercial';
+                        if (pType !== 'comercial' && pType !== 'restaurant') {
+                            console.warn('Tipo de propuesta no coincide con este canal');
+                            showExpiredMessage();
+                            return;
+                        }
                         if (decodedData.name) {
                             localStorage.setItem('companyName', decodedData.name);
                         } else {
