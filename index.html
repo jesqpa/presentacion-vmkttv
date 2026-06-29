@@ -2531,8 +2531,13 @@
                             imgEl.src = qrBase + encodeURIComponent(linkVal.trim());
                             targetEl.style.display = 'flex';
                             targetEl.style.opacity = '1';
+                            targetEl.style.cursor = 'pointer';
+                            targetEl.onclick = () => {
+                                window.open(linkVal.trim(), '_blank');
+                            };
                         } else {
                             targetEl.style.display = 'none';
+                            targetEl.onclick = null;
                         }
                     }
                 };
