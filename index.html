@@ -1764,10 +1764,10 @@
         </div>
     </div>
 
-            <div class="controls">
+                <div class="controls">
         <button class="btn-nav" id="prevBtn"><i class="fas fa-arrow-left"></i></button>
-        <button class="btn-nav" id="homeBtn" title="Volver al inicio"><i class="fas fa-home"></i></button>
         <button class="btn-nav" id="nextBtn"><i class="fas fa-arrow-right"></i></button>
+        <button class="btn-nav" id="homeBtn" style="display: none;" title="Volver al inicio"><i class="fas fa-home"></i></button>
     </div>
 
     <script>
@@ -1786,7 +1786,7 @@
                 dot.classList.toggle('active', idx + 1 === currentSlide);
             });
 
-            // Ocultar/mostrar botones con opacidad para evitar corrimientos en el layout
+                        // Mostrar/ocultar botones de navegación intercambiando nextBtn por homeBtn en la última slide
             const prevBtn = document.getElementById('prevBtn');
             const nextBtn = document.getElementById('nextBtn');
             const homeBtn = document.getElementById('homeBtn');
@@ -1796,14 +1796,16 @@
                 prevBtn.style.pointerEvents = currentSlide === 1 ? 'none' : 'all';
             }
 
-            if (nextBtn) {
-                nextBtn.style.opacity = currentSlide === totalSlides ? '0' : '1';
-                nextBtn.style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
-            }
-
-            if (homeBtn) {
-                homeBtn.style.opacity = currentSlide === totalSlides ? '1' : '0';
-                homeBtn.style.pointerEvents = currentSlide === totalSlides ? 'all' : 'none';
+            if (nextBtn && homeBtn) {
+                if (currentSlide === totalSlides) {
+                    nextBtn.style.display = 'none';
+                    homeBtn.style.display = 'flex';
+                } else {
+                    nextBtn.style.display = 'flex';
+                    nextBtn.style.opacity = '1';
+                    nextBtn.style.pointerEvents = 'all';
+                    homeBtn.style.display = 'none';
+                }
             }
 
             // Sincronizar visualización de los badges de empresa personalizado según la diapositiva
