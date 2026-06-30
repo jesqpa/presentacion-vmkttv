@@ -1764,8 +1764,9 @@
         </div>
     </div>
 
-    <div class="controls">
+            <div class="controls">
         <button class="btn-nav" id="prevBtn"><i class="fas fa-arrow-left"></i></button>
+        <button class="btn-nav" id="homeBtn" title="Volver al inicio"><i class="fas fa-home"></i></button>
         <button class="btn-nav" id="nextBtn"><i class="fas fa-arrow-right"></i></button>
     </div>
 
@@ -1785,12 +1786,25 @@
                 dot.classList.toggle('active', idx + 1 === currentSlide);
             });
 
-            // Ocultar botones en los extremos
-            document.getElementById('prevBtn').style.opacity = currentSlide === 1 ? '0' : '1';
-            document.getElementById('prevBtn').style.pointerEvents = currentSlide === 1 ? 'none' : 'all';
+            // Ocultar/mostrar botones con opacidad para evitar corrimientos en el layout
+            const prevBtn = document.getElementById('prevBtn');
+            const nextBtn = document.getElementById('nextBtn');
+            const homeBtn = document.getElementById('homeBtn');
 
-            document.getElementById('nextBtn').style.opacity = currentSlide === totalSlides ? '0' : '1';
-            document.getElementById('nextBtn').style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
+            if (prevBtn) {
+                prevBtn.style.opacity = currentSlide === 1 ? '0' : '1';
+                prevBtn.style.pointerEvents = currentSlide === 1 ? 'none' : 'all';
+            }
+
+            if (nextBtn) {
+                nextBtn.style.opacity = currentSlide === totalSlides ? '0' : '1';
+                nextBtn.style.pointerEvents = currentSlide === totalSlides ? 'none' : 'all';
+            }
+
+            if (homeBtn) {
+                homeBtn.style.opacity = currentSlide === totalSlides ? '1' : '0';
+                homeBtn.style.pointerEvents = currentSlide === totalSlides ? 'all' : 'none';
+            }
 
             // Sincronizar visualización de los badges de empresa personalizado según la diapositiva
             const companyBadge = document.getElementById('companyBadge');
@@ -1919,6 +1933,11 @@
                 currentSlide--;
                 updateSlide();
             }
+        });
+
+        document.getElementById('homeBtn').addEventListener('click', () => {
+            currentSlide = 1;
+            updateSlide();
         });
 
         document.addEventListener('keydown', (e) => {
