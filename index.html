@@ -1090,28 +1090,46 @@
             }
         }
 
-        /* QR Wrapper and Center Icons styling */
-        .qr-wrapper {
+        /* Interactive QR Container */
+        .qr-interactive-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.2rem;
+            background: rgba(0,0,0,0.15);
+            border-radius: 16px;
+            padding: 1.8rem;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .qr-active-display {
             position: relative;
-            width: 140px;
             background: white;
-            padding: 8px;
-            padding-top: 36px;
-            border-radius: 14px;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.45);
+            padding: 12px;
+            padding-top: 40px;
+            border-radius: 16px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.5);
             border: 1px solid rgba(255,255,255,0.08);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
             transition: all 0.3s ease;
+            width: 240px;
         }
-        
-        .qr-wrapper img {
+
+        .qr-active-display:hover {
+            transform: scale(1.03);
+            box-shadow: 0 16px 40px rgba(0,0,0,0.6);
+        }
+
+        .qr-active-display img {
             width: 100% !important;
             height: 100% !important;
             object-fit: contain !important;
-            border-radius: 6px !important;
+            border-radius: 8px !important;
             display: block !important;
             box-shadow: none !important;
             border: none !important;
@@ -1120,33 +1138,66 @@
             opacity: 1 !important;
         }
 
-        .qr-center-icon {
+        .qr-active-label {
             position: absolute;
             top: 6px;
             left: 50%;
             transform: translateX(-50%);
             background: white;
             border-radius: 20px;
-            padding: 4px 10px;
+            padding: 4px 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 6px;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.25);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.25);
             z-index: 2;
             white-space: nowrap;
         }
 
-        .qr-center-icon i {
-            font-size: 1rem;
+        .qr-active-label i {
+            font-size: 1.1rem;
             line-height: 1;
             display: block;
         }
 
-        .qr-center-icon span {
+        .qr-active-label span {
             color: #333;
-            font-size: 0.75rem;
+            font-size: 0.8rem;
             font-weight: 700;
+        }
+
+        .qr-selector-bar {
+            display: flex;
+            gap: 0.8rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .qr-select-btn {
+            background: rgba(255,255,255,0.03);
+            border: 2px solid rgba(255,255,255,0.1);
+            color: #94a3b8;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.4rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .qr-select-btn:hover {
+            background: rgba(255,255,255,0.08);
+            transform: scale(1.1);
+        }
+
+        .qr-select-btn.active {
+            background: rgba(255,255,255,0.08);
+            transform: scale(1.1);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
     </style>
 </head>
@@ -1719,40 +1770,17 @@
                         </div>
                     </div>
                     <div style="display: flex; flex-direction: column; align-items: center; gap: 1.5rem;">
-                        <div class="image-container"
-                            style="height: auto; min-height: 180px; display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; padding: 1.8rem; justify-items: center; align-items: center; background: rgba(0,0,0,0.15); width: 100%; box-sizing: border-box; border-radius: 16px;">
-                            <!-- WhatsApp -->
-                            <div class="qr-wrapper">
-                                <img id="contactWhatsappQr" src="images/qr_whatsapp_contact.png" class="no-kb" alt="QR WhatsApp">
-                                <div class="qr-center-icon">
-                                    <i class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
-                                    <span>WhatsApp</span>
+                        <div class="qr-interactive-container" id="qrInteractiveContainer">
+                            <!-- Active QR display (one at a time, large) -->
+                            <div class="qr-active-display" id="qrActiveWrapper">
+                                <img id="activeQrImg" src="" class="no-kb" alt="QR Code">
+                                <div class="qr-active-label">
+                                    <i id="activeQrIcon" class="fa-brands fa-whatsapp" style="color: #25D366;"></i>
+                                    <span id="activeQrLabel">WhatsApp</span>
                                 </div>
                             </div>
-                            <!-- Telegram -->
-                            <div class="qr-wrapper">
-                                <img id="contactTelegramQr" src="images/qr_telegram_contact.png" class="no-kb" alt="QR Telegram">
-                                <div class="qr-center-icon">
-                                    <i class="fa-brands fa-telegram" style="color: #24A1DE;"></i>
-                                    <span>Telegram</span>
-                                </div>
-                            </div>
-                            <!-- Instagram -->
-                            <div class="qr-wrapper">
-                                <img id="contactInstagramQr" src="images/qr_instagram_contact.png" class="no-kb" alt="QR Instagram">
-                                <div class="qr-center-icon">
-                                    <i class="fa-brands fa-instagram" style="color: #E1306C;"></i>
-                                    <span>Instagram</span>
-                                </div>
-                            </div>
-                            <!-- Facebook -->
-                            <div class="qr-wrapper">
-                                <img id="contactFacebookQr" src="images/qr_facebook_contact.png" class="no-kb" alt="QR Facebook">
-                                <div class="qr-center-icon">
-                                    <i class="fa-brands fa-facebook" style="color: #1877F2;"></i>
-                                    <span>Facebook</span>
-                                </div>
-                            </div>
+                            <!-- Channel selector icons -->
+                            <div class="qr-selector-bar" id="qrSelectorContainer"></div>
                         </div>
                         <div class="reveal-item"
                             style="font-size: 1.35rem; font-weight: 700; color: #fff; letter-spacing: 0.5px; text-align: center; text-shadow: 0 0 10px rgba(255,255,255,0.1); line-height: 1.4; max-width: 400px;">
@@ -2546,34 +2574,88 @@
                 const emailTextEl = document.getElementById('contactEmailText');
                 if (emailTextEl) emailTextEl.textContent = contactEmail || '[Tu Email]';
 
-                const qrBase = 'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=';
+                const qrBase = 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=';
 
-                const updateQr = (imgId, linkVal, fallbackTemplateUrl) => {
-                    const imgEl = document.getElementById(imgId);
-                    if (imgEl) {
-                        const wrapperEl = imgEl.parentElement;
-                        const targetEl = (wrapperEl && wrapperEl.classList.contains('qr-wrapper')) ? wrapperEl : imgEl;
-                        const hasCustomLink = linkVal && linkVal.trim() !== '' && !linkVal.includes('#');
-                        
-                        if (hasCustomLink) {
-                            imgEl.src = qrBase + encodeURIComponent(linkVal.trim());
-                            targetEl.style.display = 'flex';
-                            targetEl.style.opacity = '1';
-                            targetEl.style.cursor = 'pointer';
-                            targetEl.onclick = () => {
-                                window.open(linkVal.trim(), '_blank');
-                            };
-                        } else {
-                            targetEl.style.display = 'none';
-                            targetEl.onclick = null;
+                // Interactive QR: build channel list and render selector
+                const channels = [
+                    { type: 'whatsapp', name: 'WhatsApp', link: contactWhatsapp, icon: 'fa-brands fa-whatsapp', color: '#25D366' },
+                    { type: 'telegram', name: 'Telegram', link: contactTelegram, icon: 'fa-brands fa-telegram', color: '#24A1DE' },
+                    { type: 'instagram', name: 'Instagram', link: contactInstagram, icon: 'fa-brands fa-instagram', color: '#E1306C' },
+                    { type: 'facebook', name: 'Facebook', link: contactFacebook, icon: 'fa-brands fa-facebook', color: '#1877F2' }
+                ];
+
+                const activeChannels = channels.filter(c => c.link && c.link.trim() !== '' && !c.link.includes('######'));
+
+                const interactiveContainer = document.getElementById('qrInteractiveContainer');
+                if (interactiveContainer) {
+                    if (activeChannels.length === 0) {
+                        interactiveContainer.style.display = 'none';
+                    } else {
+                        interactiveContainer.style.display = 'flex';
+
+                        const selectorContainer = document.getElementById('qrSelectorContainer');
+                        if (selectorContainer) {
+                            selectorContainer.innerHTML = activeChannels.map((c, idx) => `
+                                <button class="qr-select-btn ${idx === 0 ? 'active' : ''}" data-type="${c.type}" title="${c.name}" style="color: ${c.color}; ${idx === 0 ? 'border-color: ' + c.color + ';' : ''}">
+                                    <i class="${c.icon}"></i>
+                                </button>
+                            `).join('');
+                        }
+
+                        const setActiveQr = (channel) => {
+                            const activeQrImg = document.getElementById('activeQrImg');
+                            const activeQrLabel = document.getElementById('activeQrLabel');
+                            const activeQrIcon = document.getElementById('activeQrIcon');
+                            const activeQrWrapper = document.getElementById('qrActiveWrapper');
+
+                            if (activeQrImg) {
+                                activeQrImg.src = qrBase + encodeURIComponent(channel.link.trim());
+                            }
+                            if (activeQrLabel) {
+                                activeQrLabel.textContent = channel.name;
+                            }
+                            if (activeQrIcon) {
+                                activeQrIcon.className = channel.icon;
+                                activeQrIcon.style.color = channel.color;
+                            }
+                            if (activeQrWrapper) {
+                                activeQrWrapper.onclick = () => {
+                                    window.open(channel.link.trim(), '_blank');
+                                };
+                            }
+
+                            // Highlight active button
+                            document.querySelectorAll('.qr-select-btn').forEach(btn => {
+                                const btnType = btn.getAttribute('data-type');
+                                if (btnType === channel.type) {
+                                    btn.classList.add('active');
+                                    btn.style.borderColor = channel.color;
+                                } else {
+                                    btn.classList.remove('active');
+                                    btn.style.borderColor = 'rgba(255,255,255,0.1)';
+                                }
+                            });
+                        };
+
+                        // Show first channel by default
+                        setActiveQr(activeChannels[0]);
+
+                        // Bind click events on selector buttons
+                        if (selectorContainer && !selectorContainer.dataset.listenerBound) {
+                            selectorContainer.dataset.listenerBound = 'true';
+                            selectorContainer.addEventListener('click', (e) => {
+                                const btn = e.target.closest('.qr-select-btn');
+                                if (btn) {
+                                    const type = btn.getAttribute('data-type');
+                                    const channel = activeChannels.find(c => c.type === type);
+                                    if (channel) {
+                                        setActiveQr(channel);
+                                    }
+                                }
+                            });
                         }
                     }
-                };
-
-                updateQr('contactWhatsappQr', contactWhatsapp, 'https://wa.me/######');
-                updateQr('contactTelegramQr', contactTelegram, 'https://t.me/######');
-                updateQr('contactInstagramQr', contactInstagram, 'https://instagram.com/######');
-                updateQr('contactFacebookQr', contactFacebook, 'https://facebook.com/######');
+                }
             }
 
             if (customizeBtn) {
